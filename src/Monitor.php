@@ -24,6 +24,7 @@ final class Monitor
         $data = $this->store->read('monitoring');
         $now = time();
 
+        $force = $force || ($data['url'] ?? null) !== $this->cfg['url'];
         if ($force || $now - ($data['certificat']['verifie'] ?? 0) > self::CERT_CACHE) {
             $data['certificat'] = $this->checkCertificate($this->cfg['url']) + ['verifie' => $now];
         }
@@ -32,6 +33,11 @@ final class Monitor
         }
 
         $this->store->update('monitoring', function (array $current) use ($check, $data): array {
+            // Nouvelle adresse surveillée : l'ancien historique ne la concerne pas, on repart de zéro.
+            if (($current['url'] ?? $this->cfg['url']) !== $this->cfg['url']) {
+                $current['controles'] = [];
+            }
+            $current['url'] = $this->cfg['url'];
             $current['certificat'] = $data['certificat'];
             $current['publication'] = $data['publication'];
             $current['controles'][] = $check;

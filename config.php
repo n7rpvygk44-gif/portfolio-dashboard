@@ -30,9 +30,9 @@ return [
     // Supervision : site à surveiller et dépôt GitHub d'où vient la dernière publication.
     // Les vérifications sont faites par bin/monitor.php (tâche planifiée toutes les 15 minutes sur AlwaysData).
     'monitor' => [
-        'url' => 'https://n7rpvygk44-gif.github.io/Portefolio/',
-        'github_repo' => 'n7rpvygk44-gif/Portefolio',
-        'github_workflow' => 'pages.yml',  // workflow de publication ; null si le site n'en a pas
+        'url' => 'https://olivierpizelle.alwaysdata.net/',
+        'github_repo' => 'n7rpvygk44-gif/portfolio-dashboard',
+        'github_workflow' => null,         // workflow de publication GitHub Actions ; null : mise à jour par git pull
         'timeout' => 10,                  // secondes avant de considérer le site comme injoignable
         'slow_ms' => 1500,                // au-delà, le site est signalé comme lent
         'keep_days' => 30,                // historique conservé

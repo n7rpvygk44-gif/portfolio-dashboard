@@ -81,7 +81,7 @@ Adresse et préfixe de la version statique : section `static` de `config.php`.
 5. Renseigner `base_url` dans `config.php`, puis décommenter la redirection HTTPS dans `public/.htaccess`.
 
 6. **Avancé › Tâches planifiées** : ajouter la commande `php ~/www/bin/monitor.php`, toutes les 15 minutes.
-7. Si le site public est lui aussi sur AlwaysData, mettre son adresse dans `monitor.url` de `config.php`.
+7. Adresse surveillée : `monitor.url` dans `config.php` (ici le site AlwaysData lui-même). Quand elle change, l'historique de supervision repart de zéro.
 
 Pour une mise à jour du code : `cd www && git pull`.
 
