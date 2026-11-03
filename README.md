@@ -44,7 +44,9 @@ php -S localhost:8000 -t public bin/router.php
 
 Puis ouvrir http://localhost:8000. Pour le tableau de bord : lancer une fois `php bin/create-admin.php` (choix de l'identifiant et du mot de passe), puis ouvrir http://localhost:8000/admin. Pour remplir la supervision : `php bin/monitor.php`.
 
-## Version statique (GitHub Pages) : mode actuel
+## Version statique (GitHub Pages) : dépôt d'origine seulement
+
+> Dans ce dépôt `portfolio-dashboard`, le workflow de publication sur GitHub Pages a été retiré : le tableau de bord a besoin de PHP et se publie sur AlwaysData. La section ci-dessous décrit le fonctionnement du dépôt d'origine `Portefolio`.
 
 Pour l'instant le site est publié **sans PHP** sur GitHub Pages : https://n7rpvygk44-gif.github.io/Portefolio/
 
