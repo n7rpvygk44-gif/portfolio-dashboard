@@ -2,9 +2,12 @@
 // Configuration générale du site. À adapter avant la mise en ligne.
 return [
     // URL publique du site, sans slash final (sert au référencement : canonical, sitemap).
-    'base_url' => 'https://votre-compte.alwaysdata.net',
+    'base_url' => 'https://olivierpizelle.alwaysdata.net',
     'site_name' => 'Portfolio BTS SIO SISR',
     'lang' => 'fr',
+
+    // Hébergeur affiché dans les mentions légales (obligatoire).
+    'host' => "alwaysdata, 91 rue du Faubourg Saint-Honoré, 75008 Paris, France (https://www.alwaysdata.com)",
 
     // Préfixe des liens quand le site n'est pas à la racine du domaine (ex. '/Portefolio').
     'base_path' => '',
