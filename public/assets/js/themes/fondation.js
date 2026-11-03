@@ -1194,7 +1194,7 @@
     title.textContent = name ? name.textContent.trim() : '';
     const sub = document.createElement('span');
     const heading = document.querySelector('main h1');
-    sub.textContent = seen && heading ? heading.textContent.trim() : 'Plan Seldon · Portfolio';
+    sub.textContent = seen && heading ? heading.textContent.trim() : 'Plan BTS SIO SISR · Portfolio';
     title.appendChild(sub);
 
     const gate = document.createElement('div');

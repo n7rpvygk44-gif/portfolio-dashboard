@@ -386,7 +386,7 @@
 .theme-fondation-technique td.check { color: var(--accent); }
 .theme-fondation-technique .site-footer { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(8px); border-top-color: var(--border); }
 .theme-fondation-technique .site-footer p { font: 0.75rem var(--mono); letter-spacing: 0.04em; }
-.theme-fondation-technique .site-footer p::before { content: "ENCYCLOPÉDIE GALACTIQUE · PLAN SELDON · " / ""; color: var(--gold-text); }
+.theme-fondation-technique .site-footer p::before { content: "ENCYCLOPÉDIE GALACTIQUE · PLAN BTS SIO SISR · " / ""; color: var(--gold-text); }
 
 /* ----- Accessibilité et impression ----- */
 .a11y-contrast .fondation-scene { display: none; }

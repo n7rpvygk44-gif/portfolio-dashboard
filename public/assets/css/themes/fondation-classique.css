@@ -239,7 +239,7 @@
 .theme-fondation-classique thead th { background: #f1e7cf; font-family: var(--title-font); }
 .theme-fondation-classique td.check { color: var(--radiant); }
 .theme-fondation-classique .site-footer { background: rgba(255, 255, 255, 0.75); }
-.theme-fondation-classique .site-footer p::before { content: "Encyclopédie Galactique · Plan Seldon · " / ""; color: var(--accent); }
+.theme-fondation-classique .site-footer p::before { content: "Encyclopédie Galactique · Plan BTS SIO SISR · " / ""; color: var(--accent); }
 
 /* ----- Accessibilité et impression ----- */
 .a11y-contrast .fondation-scene { display: none; }

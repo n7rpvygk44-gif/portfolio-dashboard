@@ -131,7 +131,7 @@
     box-shadow: 0 0 24px rgba(57, 255, 122, 0.15), inset 0 0 40px rgba(57, 255, 122, 0.08);
 }
 .theme-seldon .hero::before {
-    content: "// CODEC CALL : INCOMING · PLAN SELDON" / "";
+    content: "// CODEC CALL : INCOMING · PLAN BTS SIO SISR" / "";
     position: absolute;
     top: 0.6rem;
     left: 1.5rem;

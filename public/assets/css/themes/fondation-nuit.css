@@ -145,7 +145,7 @@
 }
 .theme-fondation-nuit .hero > * { position: relative; z-index: 1; max-width: 60%; }
 .theme-fondation-nuit .hero::before {
-    content: "◉ RÉSEAU CHIRAL · TERMINUS ⟷ TRANTOR · PLAN SELDON" / "";
+    content: "◉ RÉSEAU CHIRAL · TERMINUS ⟷ TRANTOR · PLAN BTS SIO SISR" / "";
     position: absolute;
     top: 0.8rem;
     left: 2rem;

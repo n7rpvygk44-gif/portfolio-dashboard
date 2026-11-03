@@ -405,7 +405,7 @@
 .theme-fondation td.check { color: var(--accent); }
 .theme-fondation .site-footer { background: rgba(251, 247, 239, 0.6); backdrop-filter: blur(8px); border-top-color: var(--border); }
 .theme-fondation .site-footer p { font-size: 0.78rem; letter-spacing: 0.06em; }
-.theme-fondation .site-footer p::before { content: "Plan Seldon · " / ""; color: var(--accent); text-transform: uppercase; letter-spacing: 0.3em; }
+.theme-fondation .site-footer p::before { content: "Plan BTS SIO SISR · " / ""; color: var(--accent); text-transform: uppercase; letter-spacing: 0.3em; }
 
 /* =====================================================================
    Cinématique du Radiant (classes posées par fondation.js, uniquement
