@@ -1,10 +1,12 @@
-# Portfolio BTS SIO SISR
+# Portfolio BTS SIO SISR, version avec tableau de bord
+
+Copie indépendante du dépôt [Portefolio](https://github.com/n7rpvygk44-gif/Portefolio), qui ajoute un **tableau de bord** sur `/admin` : gestion du contenu, audience et supervision. Le dépôt d'origine et le site publié sur GitHub Pages ne sont pas concernés.
 
 Site portfolio pour l'épreuve E5 du BTS SIO option SISR : présentation, parcours, compétences du bloc 1, réalisations, tableau de synthèse, veille technologique, base de connaissances et contact.
 
 - **PHP natif** (8.1 ou plus), sans framework ni base de données
 - **Données en JSON** dans `data/`, hors de la partie publique
-- **Backoffice sécurisé** sur `/admin`
+- **Tableau de bord sécurisé** sur `/admin` : contenu, audience, supervision (voir plus bas)
 - **Référencement** : URL propres, balises meta et Open Graph, `sitemap.xml` et `robots.txt` générés
 - **Accessibilité** : panneau de réglages (texte agrandi, contraste, lecture facilitée, animations), navigation au clavier
 - **Thèmes interchangeables**, choisis depuis le backoffice
@@ -27,6 +29,11 @@ data/                      contenus en JSON (profil, réalisations, veille, base
 bin/create-admin.php       création du compte administrateur
 bin/router.php             routeur pour tester en local
 bin/build-static.php       génération de la version statique (dist/)
+bin/monitor.php            vérification du site, à lancer en tâche planifiée
+src/Audience.php           mesure d'audience (compteurs JSON, sans cookie)
+src/Monitor.php            supervision (disponibilité, certificat HTTPS, publication)
+src/Chart.php              graphiques SVG du tableau de bord
+public/assets/js/audience.js  envoi d'une page vue au serveur
 ```
 
 ## Tester en local
@@ -35,7 +42,7 @@ bin/build-static.php       génération de la version statique (dist/)
 php -S localhost:8000 -t public bin/router.php
 ```
 
-Puis ouvrir http://localhost:8000. Pour tester le backoffice : passer `'admin_enabled'` à `true`, lancer `php bin/create-admin.php`, puis ouvrir http://localhost:8000/admin.
+Puis ouvrir http://localhost:8000. Pour le tableau de bord : lancer une fois `php bin/create-admin.php` (choix de l'identifiant et du mot de passe), puis ouvrir http://localhost:8000/admin. Pour remplir la supervision : `php bin/monitor.php`.
 
 ## Version statique (GitHub Pages) : mode actuel
 
@@ -49,9 +56,20 @@ Pour l'instant le site est publié **sans PHP** sur GitHub Pages : https://n7rpv
 
 Adresse et préfixe de la version statique : section `static` de `config.php`.
 
-## Mettre en ligne sur AlwaysData (plus tard, avec le backoffice)
+## Tableau de bord
 
-Passer `'admin_enabled'` à `true` dans `config.php`, puis :
+| Rubrique | Ce qu'elle montre | D'où viennent les données |
+|---|---|---|
+| **Tableau de bord** | Résumé des trois rubriques | — |
+| **Contenu** | Profil, réalisations, base de connaissances, veille | `data/*.json`, modifiés par les formulaires |
+| **Audience** | Visites, pages vues, pages les plus lues, provenance, type d'écran (7 jours à 12 mois) | `data/audience-AAAA-MM.json` |
+| **Supervision** | État du site, disponibilité (24 h, 7 j, 30 j), temps de réponse, certificat HTTPS, dernière publication, incidents | `data/monitoring.json` |
+
+**Audience, conforme au RGPD sans bandeau de consentement** : `audience.js` envoie à `/api/visite` la page, le site d'origine et la largeur d'écran. Le serveur n'ajoute que des compteurs par jour : pas de cookie, pas d'identifiant, pas d'adresse IP. Les robots et les navigateurs « Do Not Track » ou « Global Privacy Control » ne sont pas comptés. Conservation 13 mois (`audience_keep_months`). L'audience a besoin de PHP : elle est absente de la version GitHub Pages.
+
+**Supervision** : `php bin/monitor.php` ouvre le site (code HTTP, temps de réponse), lit le certificat HTTPS (toutes les 6 h) et demande à l'API publique de GitHub la date de la dernière publication (toutes les heures). Le bouton « Vérifier maintenant » fait la même chose. Réglages dans la section `monitor` de `config.php`.
+
+## Mettre en ligne sur AlwaysData
 
 
 1. Créer un compte gratuit sur alwaysdata.com.
@@ -59,6 +77,9 @@ Passer `'admin_enabled'` à `true` dans `config.php`, puis :
 3. Se connecter en SSH et cloner le dépôt dans `www` : `git clone https://github.com/<compte>/<depot>.git www`
 4. `php www/bin/create-admin.php` pour créer le compte du backoffice.
 5. Renseigner `base_url` dans `config.php`, puis décommenter la redirection HTTPS dans `public/.htaccess`.
+
+6. **Avancé › Tâches planifiées** : ajouter la commande `php ~/www/bin/monitor.php`, toutes les 15 minutes.
+7. Si le site public est lui aussi sur AlwaysData, mettre son adresse dans `monitor.url` de `config.php`.
 
 Pour une mise à jour du code : `cd www && git pull`.
 

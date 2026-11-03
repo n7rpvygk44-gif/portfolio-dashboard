@@ -33,6 +33,18 @@ if ($config['admin_enabled'] && ($path === '/admin' || str_starts_with($path, '/
     exit;
 }
 
+// ----- Mesure d'audience : reçoit les pages vues envoyées par assets/js/audience.js -----
+if ($path === '/api/visite') {
+    if ($method === 'POST' && $config['audience_enabled']) {
+        $hit = json_decode((string) file_get_contents('php://input', length: 2048), true);
+        if (is_array($hit)) {
+            (new Audience($store, $config))->record($hit, (string) ($_SERVER['HTTP_USER_AGENT'] ?? ''), (string) ($_SERVER['HTTP_HOST'] ?? ''));
+        }
+    }
+    http_response_code(204);
+    exit;
+}
+
 // ----- Fichiers générés pour le référencement -----
 if ($path === '/sitemap.xml') {
     header('Content-Type: application/xml; charset=utf-8');

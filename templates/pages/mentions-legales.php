@@ -19,7 +19,15 @@
 
 <h2>Données personnelles et cookies</h2>
 <p>
-    Ce site ne collecte aucune donnée personnelle : il n'a pas de formulaire, pas de mesure d'audience et ne dépose aucun cookie.
+    <?php if (!empty($config['audience_enabled'])): ?>
+        Ce site ne collecte aucune donnée personnelle et ne dépose aucun cookie. Il n'a pas de formulaire.
+        Une mesure d'audience anonyme compte les pages vues : pour chaque page ouverte, le serveur ajoute 1 au compteur du jour pour cette page,
+        pour le site d'où vous venez (par exemple « Google ») et pour votre type d'écran (ordinateur, tablette ou mobile).
+        Votre adresse IP n'est pas enregistrée, aucun identifiant ne vous est attribué et ces compteurs sont supprimés après 13 mois.
+        Si votre navigateur envoie le signal « Ne pas me suivre » (Do Not Track ou Global Privacy Control), rien n'est compté.
+    <?php else: ?>
+        Ce site ne collecte aucune donnée personnelle : il n'a pas de formulaire, pas de mesure d'audience et ne dépose aucun cookie.
+    <?php endif; ?>
     Les réglages choisis (accessibilité, son activé ou coupé) sont enregistrés uniquement dans votre navigateur et ne sont envoyés nulle part.
     La page Supervision mesure le chargement des pages (poids, temps, fluidité) directement dans votre navigateur ; ces mesures restent dans l'onglet ouvert et disparaissent à sa fermeture.
 </p>

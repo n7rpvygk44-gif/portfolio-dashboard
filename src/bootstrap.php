@@ -12,6 +12,12 @@ require ROOT_DIR . '/src/Seo.php';
 require ROOT_DIR . '/src/Auth.php';
 require ROOT_DIR . '/src/Admin.php';
 require ROOT_DIR . '/src/Theme.php';
+require ROOT_DIR . '/src/Chart.php';
+require ROOT_DIR . '/src/Audience.php';
+require ROOT_DIR . '/src/Monitor.php';
+
+// Toutes les dates (audience, supervision) sont à l'heure de Paris.
+date_default_timezone_set('Europe/Paris');
 
 $config = require ROOT_DIR . '/config.php';
 
@@ -21,6 +27,7 @@ if ($config['static_build']) {
     $config = array_merge($config, $config['static']);
     $config['static_build'] = true;
     $config['admin_enabled'] = false;
+    $config['audience_enabled'] = false;
 }
 
 $store = new JsonStore($config['data_dir']);

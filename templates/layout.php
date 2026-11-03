@@ -33,6 +33,9 @@ $isCurrent = fn (string $href) => $href === '/' ? $path === '/' : str_starts_wit
     <script src="<?= e(asset('/assets/js/main.js')) ?>" defer></script>
     <script src="<?= e(asset('/assets/js/sound.js')) ?>" defer></script>
     <script src="<?= e(asset('/assets/js/supervision.js')) ?>" defer></script>
+    <?php if (!empty($config['audience_enabled']) && Theme::preview() === null): ?>
+        <script src="<?= e(asset('/assets/js/audience.js')) ?>" data-endpoint="<?= e(url('/api/visite')) ?>" defer></script>
+    <?php endif; ?>
     <?php if (Theme::hasScript($theme)): ?>
         <script src="<?= e(asset('/assets/js/themes/' . $theme . '.js')) ?>" defer></script>
     <?php endif; ?>

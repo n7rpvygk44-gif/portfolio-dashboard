@@ -20,3 +20,77 @@ textarea.markdown { font-family: ui-monospace, Consolas, monospace; font-size: 0
 .theme-choice input { width: auto; }
 .theme-choice label { margin: 0; font-weight: 400; }
 fieldset { border: 1px solid var(--border); border-radius: var(--radius); padding: 0.5rem 1rem; }
+
+/* ===== Tableau de bord ===== */
+.admin .main-nav a[aria-current="page"] { font-weight: 700; text-decoration-thickness: 3px; }
+.lead { color: var(--muted); max-width: 70ch; }
+.muted { color: var(--muted); font-size: 0.9rem; }
+.empty { color: var(--muted); font-style: italic; }
+.plain { list-style: none; padding: 0; margin: 0; }
+.plain li { padding: 0.35rem 0; border-bottom: 1px solid var(--border); }
+.plain li:last-child { border-bottom: none; }
+
+.dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1rem 0; }
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; margin: 1rem 0; min-width: 0; }
+.dash-grid .panel { margin: 0; }
+.panel h2 { margin-top: 0; font-size: 1.15rem; }
+.panel h2 small { font-weight: 400; color: var(--muted); font-size: 0.85rem; }
+
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.75rem; margin: 0.75rem 0; }
+.kpis div { background: var(--bg); border-radius: var(--radius); padding: 0.5rem 0.75rem; }
+.kpis dt { font-size: 0.8rem; color: var(--muted); }
+.kpis dd { margin: 0; font-size: 1.2rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.kpis-large { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+.kpis-large div { background: var(--surface); border: 1px solid var(--border); }
+.kpis-large dd { font-size: 1.8rem; }
+
+.facts, .facts dt, .facts dd { display: block; border: none; padding: 0; background: none; }
+.facts { margin: 0.5rem 0; }
+.facts dt { color: var(--muted); font-size: 0.85rem; }
+.facts dd { margin: 0 0 0.6rem; overflow-wrap: anywhere; }
+.big { font-size: 1.6rem; font-weight: 700; margin: 0.25rem 0; }
+.good { color: var(--ok); }
+.warn { color: var(--ko); }
+
+/* Pastille d'état */
+:root { --ok: #1e7a3c; --slow: #a86400; --ko: #b3261e; --chart: var(--accent); }
+@media (prefers-color-scheme: dark) { :root:not(.theme-light) { --ok: #6fd08c; --slow: #f0b44c; --ko: #ff8a80; } }
+.status { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 700; padding: 0.3rem 0.8rem; border-radius: 999px; border: 1px solid currentColor; }
+.status-dot { width: 0.7rem; height: 0.7rem; border-radius: 50%; background: currentColor; }
+.status-ok { color: var(--ok); }
+.status-lent { color: var(--slow); }
+.status-panne { color: var(--ko); }
+.status-inconnu { color: var(--muted); }
+.status-ok .status-dot { animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: 0.35; } }
+.status-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1rem; margin: 1rem 0; }
+.status-bar form { margin: 0 0 0 auto; }
+
+/* Onglets de période */
+.tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; }
+.tabs a { padding: 0.3rem 0.9rem; border: 1px solid var(--border); border-radius: 999px; text-decoration: none; color: var(--text); }
+.tabs a[aria-current="page"] { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+
+/* Graphiques SVG (src/Chart.php) */
+.chart { display: block; width: 100%; height: auto; }
+.chart-grid { stroke: var(--border); stroke-width: 1; }
+.chart-axis { fill: var(--muted); font-size: 11px; }
+.chart-bar { fill: var(--chart); }
+.chart-bar:hover { opacity: 0.75; }
+.chart-line { fill: none; stroke: var(--chart); stroke-width: 2; stroke-linejoin: round; }
+.chart-dot { fill: var(--surface); stroke: var(--chart); stroke-width: 2; }
+
+/* Tableaux de l'audience */
+.admin-table.compact { width: 100%; font-size: 0.92rem; }
+.admin-table.compact caption { position: absolute; left: -9999px; }
+.admin-table .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.admin-table th[scope="row"] { font-weight: 400; overflow-wrap: anywhere; }
+
+details.help { margin: 1.5rem 0; color: var(--muted); }
+details.help summary { cursor: pointer; color: var(--text); }
+
+/* Sur téléphone, le menu du backoffice reste visible (pas de bouton Menu ici). */
+@media (max-width: 800px) {
+    .admin .main-nav { display: block; }
+    .admin .main-nav ul { flex-direction: row; }
+}

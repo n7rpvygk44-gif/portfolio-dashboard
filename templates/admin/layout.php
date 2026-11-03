@@ -16,10 +16,8 @@
         <?php if (!empty($_SESSION['admin'])): ?>
             <nav class="main-nav" aria-label="Menu du backoffice">
                 <ul>
-                    <li><a href="/admin/profil">Profil</a></li>
-                    <li><a href="/admin/apparence">Apparence</a></li>
-                    <?php foreach ($collections as $key => $c): ?>
-                        <li><a href="/admin/<?= e($key) ?>"><?= e($c['label']) ?></a></li>
+                    <?php foreach (['/admin' => 'Tableau de bord', '/admin/contenu' => 'Contenu', '/admin/audience' => 'Audience', '/admin/supervision' => 'Supervision', '/admin/apparence' => 'Apparence'] as $href => $label): ?>
+                        <li><a href="<?= e($href) ?>"<?= $section === $href ? ' aria-current="page"' : '' ?>><?= e($label) ?></a></li>
                     <?php endforeach; ?>
                     <li><a href="/" target="_blank" rel="noopener">Voir le site</a></li>
                     <li>

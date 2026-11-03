@@ -3,3 +3,8 @@ data/admin.json
 data/login_attempts.json
 data/*.tmp
 dist/
+
+# Données produites par le site en fonctionnement (audience, supervision) : propres à chaque serveur.
+data/audience-*.json
+data/monitoring.json
+data/*.lock

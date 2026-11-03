@@ -11,6 +11,12 @@ $admin = fn (string $title, array $extra = []) => [
     'title' => $title,
     'collections' => Admin::COLLECTIONS,
     'csrf' => Auth::csrfToken(),
+    // Rubrique du menu à mettre en évidence.
+    'section' => match (true) {
+        $path === '/admin' => '/admin',
+        in_array($path, ['/admin/audience', '/admin/supervision', '/admin/apparence'], true) => $path,
+        default => '/admin/contenu',
+    },
 ] + $extra;
 
 $redirect = function (string $to): never {
@@ -50,12 +56,49 @@ if ($path === '/admin/logout' && $method === 'POST') {
     $redirect('/admin/login');
 }
 
+// Tableau de bord : un résumé des trois chantiers (contenu, audience, supervision).
 if ($path === '/admin') {
     $counts = [];
     foreach (Admin::COLLECTIONS as $key => $_) {
         $counts[$key] = count($store->read($key));
     }
-    View::render('admin/dashboard', $admin('Tableau de bord', ['counts' => $counts]), 'admin/layout');
+    View::render('admin/dashboard', $admin('Tableau de bord', [
+        'counts' => $counts,
+        'audience' => (new Audience($store, $config))->report(7),
+        'supervision' => (new Monitor($store, $config))->report(),
+    ]), 'admin/layout');
+    return;
+}
+
+if ($path === '/admin/contenu') {
+    $counts = [];
+    foreach (Admin::COLLECTIONS as $key => $_) {
+        $counts[$key] = count($store->read($key));
+    }
+    View::render('admin/contenu', $admin('Contenu', ['counts' => $counts]), 'admin/layout');
+    return;
+}
+
+if ($path === '/admin/audience') {
+    $days = in_array((int) ($_GET['jours'] ?? 30), [7, 30, 90, 365], true) ? (int) ($_GET['jours'] ?? 30) : 30;
+    View::render('admin/audience', $admin('Audience', [
+        'report' => (new Audience($store, $config))->report($days),
+        'enabled' => $config['audience_enabled'],
+    ]), 'admin/layout');
+    return;
+}
+
+if ($path === '/admin/supervision') {
+    $monitor = new Monitor($store, $config);
+    if ($method === 'POST') {
+        $monitor->run(true);
+        $redirect('/admin/supervision?verifie=1');
+    }
+    View::render('admin/supervision', $admin('Supervision', [
+        'report' => $monitor->report(),
+        'checked' => isset($_GET['verifie']),
+        'slowMs' => $config['monitor']['slow_ms'],
+    ]), 'admin/layout');
     return;
 }
 
@@ -72,7 +115,7 @@ if ($path === '/admin/profil') {
         'item' => $profile,
         'action' => '/admin/profil',
         'saved' => $saved,
-        'back' => '/admin',
+        'back' => '/admin/contenu',
     ]), 'admin/layout');
     return;
 }

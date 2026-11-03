@@ -39,6 +39,22 @@ final class JsonStore
         rename($tmp, $file);
     }
 
+    // Lit, modifie et réécrit un fichier en le verrouillant pendant l'opération :
+    // deux visiteurs arrivant en même temps ne peuvent pas effacer le comptage l'un de l'autre.
+    public function update(string $name, callable $change, mixed $default = []): mixed
+    {
+        $lock = fopen($this->path($name) . '.lock', 'c');
+        flock($lock, LOCK_EX);
+        try {
+            $data = $change($this->read($name, $default));
+            $this->write($name, $data);
+            return $data;
+        } finally {
+            flock($lock, LOCK_UN);
+            fclose($lock);
+        }
+    }
+
     // Retrouve un élément d'une collection par son identifiant (slug).
     public function find(string $name, string $slug): ?array
     {
