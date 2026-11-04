@@ -8,6 +8,7 @@ define('ROOT_DIR', dirname(__DIR__));
 require ROOT_DIR . '/src/JsonStore.php';
 require ROOT_DIR . '/src/View.php';
 require ROOT_DIR . '/src/Markdown.php';
+require ROOT_DIR . '/src/Kb.php';
 require ROOT_DIR . '/src/Seo.php';
 require ROOT_DIR . '/src/Auth.php';
 require ROOT_DIR . '/src/Admin.php';

@@ -26,12 +26,27 @@ final class Seo
         return $paths;
     }
 
+    // Date de dernière mise à jour connue d'une page (pour le sitemap), ou '' si inconnue.
+    private static function lastmod(JsonStore $store, string $path): string
+    {
+        $map = ['/realisations/' => ['realisations', 'date'], '/veille/' => ['veille', 'date'], '/base-de-connaissances/' => ['kb', 'verifie_le']];
+        foreach ($map as $prefix => [$collection, $field]) {
+            if (str_starts_with($path, $prefix)) {
+                $item = $store->find($collection, substr($path, strlen($prefix)));
+                $date = (string) ($item[$field] ?? '');
+                return preg_match('/^\d{4}-\d{2}-\d{2}$/', $date) ? $date : '';
+            }
+        }
+        return '';
+    }
+
     public static function sitemap(array $config, JsonStore $store): string
     {
         $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
         $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
         foreach (self::pages($store) as $path) {
-            $xml .= '  <url><loc>' . e(self::url($config, $path)) . "</loc></url>\n";
+            $lastmod = self::lastmod($store, $path);
+            $xml .= '  <url><loc>' . e(self::url($config, $path)) . '</loc>' . ($lastmod !== '' ? "<lastmod>$lastmod</lastmod>" : '') . "</url>\n";
         }
         return $xml . "</urlset>\n";
     }

@@ -87,6 +87,18 @@ Pour une mise à jour du code : `cd www && git pull`.
 
 Les contenus saisis dans le backoffice sont écrits dans `data/` sur le serveur. Pensez à les récupérer régulièrement (SFTP) et à les committer, pour les sauvegarder et garder le dépôt à jour.
 
+## Base de connaissances
+
+Fiches pas à pas pour reproduire les réalisations (`data/kb.json`, modifiables dans **Contenu › Base de connaissances**).
+
+- **Types de fiche** : Procédure, Guide, Documentation, Mémo, Notion, Glossaire. **Domaines** : hébergement, systèmes, réseau, sécurité, supervision, outils.
+- **Champs facultatifs** : niveau, durée, système, versions testées, date de dernière vérification, fiches à lire avant, statut (Archive). Une fiche sans ces champs s'affiche comme avant.
+- **Parcours** : le champ « Parcours » d'une réalisation liste les fiches dans l'ordre. La réalisation affiche « Reproduire ce projet », chaque fiche affiche son étape et des liens précédent / suivant.
+- **Gabarit d'une procédure** : `## Objectif`, `## Prérequis`, `## Étapes` avec des `### Étape 1 : …` (case « fait » mémorisée dans le navigateur), `## Vérification`, `## Dépannage` (tableau symptôme / cause / solution), `## Sécurité et bonnes pratiques`, `## Pour aller plus loin`.
+- **Markdown** (`src/Markdown.php`) : blocs ```` ```bash ```` avec bouton Copier, tableaux `| a | b |`, images `![légende](/assets/img/…)`, encadrés `> Attention :`, `> Astuce :`, `> Remarque :`, `> Résultat attendu :`.
+- **Recherche et filtres** : texte, domaine, type, niveau (côté serveur, et instantané en JavaScript), index de A à Z.
+- **Référencement** : données structurées TechArticle, BreadcrumbList et HowTo (`src/Kb.php`), date `lastmod` du sitemap tirée de la dernière vérification.
+
 ## Sécurité du backoffice
 
 - Mot de passe haché avec `password_hash` (jamais stocké en clair), fichier `data/admin.json` exclu de Git

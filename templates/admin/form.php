@@ -24,11 +24,11 @@
                 <textarea id="<?= e($id) ?>" name="<?= e($name) ?>" rows="3"><?= e($value) ?></textarea>
             <?php elseif ($field['type'] === 'markdown'): ?>
                 <textarea id="<?= e($id) ?>" name="<?= e($name) ?>" rows="16" class="markdown"><?= e($value) ?></textarea>
-                <small>Mise en forme : ## Titre, - liste, **gras**, `code`, [lien](https://…), ``` pour un bloc de code.</small>
+                <small>Mise en forme : ## Titre, ### Étape 1 : …, - liste, 1. liste numérotée, **gras**, `code`, [lien](https://…), ```bash pour un bloc de commandes (bouton Copier automatique), ![légende](/assets/img/…) pour une image, | a | b | pour un tableau. Encadrés : une ligne qui commence par « &gt; Attention : », « &gt; Astuce : », « &gt; Remarque : » ou « &gt; Résultat attendu : ».</small>
             <?php elseif ($field['type'] === 'select'): ?>
                 <select id="<?= e($id) ?>" name="<?= e($name) ?>">
                     <?php foreach ($field['options'] as $option): ?>
-                        <option<?= $option === $value ? ' selected' : '' ?>><?= e($option) ?></option>
+                        <option value="<?= e($option) ?>"<?= $option === $value ? ' selected' : '' ?>><?= $option === '' ? '(non renseigné)' : e($option) ?></option>
                     <?php endforeach; ?>
                 </select>
             <?php else: ?>
