@@ -21,11 +21,14 @@ $isCurrent = fn (string $href) => $href === '/' ? $path === '/' : str_starts_wit
     <title><?= e($title) ?> | <?= e($siteName) ?></title>
     <meta name="description" content="<?= e($description) ?>">
     <link rel="canonical" href="<?= e($canonical) ?>">
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="<?= e($ogType ?? 'website') ?>">
     <meta property="og:title" content="<?= e($title) ?>">
     <meta property="og:description" content="<?= e($description) ?>">
     <meta property="og:url" content="<?= e($canonical) ?>">
     <meta property="og:site_name" content="<?= e($siteName) ?>">
+    <?php foreach ($jsonLd ?? [] as $data): ?>
+        <script type="application/ld+json"><?= json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP) ?></script>
+    <?php endforeach; ?>
     <link rel="stylesheet" href="<?= e(asset('/assets/css/style.css')) ?>">
     <?php if ($theme !== Theme::DEFAULT): ?>
         <link rel="stylesheet" href="<?= e(asset('/assets/css/themes/' . $theme . '.css')) ?>">

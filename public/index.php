@@ -94,7 +94,8 @@ switch (true) {
             notFound($page('Page introuvable', ''));
             break;
         }
-        $kb = array_values(array_filter($store->read('kb'), fn ($k) => in_array($k['slug'], $item['kb'] ?? [], true)));
+        // Fiches du parcours « Reproduire ce projet », dans l'ordre choisi dans le tableau de bord.
+        $kb = Kb::path($item, $store->read('kb'));
         View::render('pages/realisation', $page($item['titre'], $item['resume'] ?? '') + [
             'item' => $item,
             'kb' => $kb,
@@ -128,29 +129,38 @@ switch (true) {
         break;
 
     case $path === '/base-de-connaissances':
+        $all = $store->read('kb');
         $q = trim((string) ($_GET['q'] ?? ''));
-        $items = $store->read('kb');
-        if ($q !== '') {
-            $items = array_values(array_filter($items, fn ($k) => mb_stripos(
-                ($k['titre'] ?? '') . ' ' . ($k['outil'] ?? '') . ' ' . ($k['resume'] ?? '') . ' ' . ($k['contenu'] ?? ''),
-                $q
-            ) !== false));
+        $filters = [];
+        foreach (Kb::FILTERS as $name) {
+            $filters[$name] = trim((string) ($_GET[$name] ?? ''));
         }
-        View::render('pages/kb', $page('Base de connaissances', 'Guides, documentations et procédures des outils utilisés dans mes projets.') + [
-            'items' => $items,
+        $realisations = $store->read('realisations');
+        View::render('pages/kb', $page('Base de connaissances', 'Procédures pas à pas, guides et notions pour reproduire mes réalisations en systèmes, réseaux et cybersécurité.') + [
+            'all' => $all,
+            'items' => Kb::filter($all, $q, $filters),
             'q' => $q,
+            'filters' => $filters,
+            'groupBy' => ($_GET['classer'] ?? '') === 'categorie' ? 'categorie' : 'domaine',
+            'paths' => array_values(array_filter(array_map(fn ($r) => ['realisation' => $r, 'steps' => Kb::path($r, $all)], $realisations), fn ($p) => $p['steps'])),
         ]);
         break;
 
     case (bool) preg_match('#^/base-de-connaissances/([a-z0-9-]+)$#', $path, $m):
+        $all = $store->read('kb');
         $item = $store->find('kb', $m[1]);
         if (!$item) {
             notFound($page('Page introuvable', ''));
             break;
         }
-        View::render('pages/article', $page($item['titre'], $item['resume'] ?? '') + [
+        $bySlug = array_column($all, null, 'slug');
+        View::render('pages/kb-article', $page($item['titre'], $item['resume'] ?? '') + [
             'item' => $item,
-            'back' => ['/base-de-connaissances', 'Base de connaissances'],
+            'prerequis' => array_values(array_filter(array_map(fn ($s) => $bySlug[$s] ?? null, $item['prerequis'] ?? []))),
+            'usedIn' => Kb::usedIn($item['slug'], $store->read('realisations'), $all),
+            'toc' => Markdown::headings($item['contenu'] ?? ''),
+            'ogType' => 'article',
+            'jsonLd' => Kb::jsonLd($config, $item, $profile),
         ]);
         break;
 

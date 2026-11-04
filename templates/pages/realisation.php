@@ -34,13 +34,21 @@ $titles = array_column($competences, 'titre', 'code');
     <?= Markdown::toHtml($item['contenu'] ?? '') ?>
 
     <?php if ($kb): ?>
-        <aside class="related">
-            <h2>Documentation associée</h2>
-            <ul>
+        <?php $total = Kb::totalDuration($kb); ?>
+        <section class="related kb-reproduce" id="reproduire" aria-labelledby="reproduire-titre">
+            <h2 id="reproduire-titre">Reproduire ce projet</h2>
+            <p>Suivez ces fiches de la base de connaissances dans l'ordre<?= $total !== '' ? ' (environ ' . e($total) . ' au total)' : '' ?>. Chacune détaille les commandes, le résultat attendu et les solutions aux erreurs courantes.</p>
+            <ol class="kb-path-steps">
                 <?php foreach ($kb as $k): ?>
-                    <li><a href="<?= e(url('/base-de-connaissances/' . $k['slug'])) ?>"><?= e($k['titre']) ?></a></li>
+                    <li>
+                        <a href="<?= e(url('/base-de-connaissances/' . $k['slug'])) ?>"><?= e($k['titre']) ?></a>
+                        <?php $badges = array_filter([$k['categorie'] ?? '', $k['niveau'] ?? '', $k['duree'] ?? '']); ?>
+                        <?php if ($badges): ?>
+                            <span class="meta">· <?= e(implode(' · ', $badges)) ?></span>
+                        <?php endif; ?>
+                    </li>
                 <?php endforeach; ?>
-            </ul>
-        </aside>
+            </ol>
+        </section>
     <?php endif; ?>
 </article>

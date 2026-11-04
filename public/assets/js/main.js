@@ -74,18 +74,26 @@
         });
     }
 
-    // Base de connaissances : filtre instantané pendant la saisie
+    // Base de connaissances : filtre instantané pendant la saisie et au choix d'un filtre
     // (le formulaire fonctionne aussi sans JavaScript grâce à la recherche côté serveur).
     const filter = document.querySelector('[data-kb-filter]');
     if (filter) {
         const empty = document.querySelector('[data-kb-empty]');
-        filter.addEventListener('input', () => {
+        const selects = document.querySelectorAll('[data-kb-select]');
+        const apply = () => {
             const q = filter.value.trim().toLowerCase();
+            const wanted = {};
+            selects.forEach((s) => { wanted[s.dataset.kbSelect] = s.value; });
             let visible = 0;
             document.querySelectorAll('[data-kb-section]').forEach((section) => {
                 let inSection = 0;
                 section.querySelectorAll('.card').forEach((card) => {
-                    const match = card.textContent.toLowerCase().includes(q);
+                    let match = card.textContent.toLowerCase().includes(q);
+                    Object.keys(wanted).forEach((name) => {
+                        if (wanted[name] && card.dataset[name] !== wanted[name]) {
+                            match = false;
+                        }
+                    });
                     card.hidden = !match;
                     if (match) {
                         inSection++;
@@ -97,14 +105,121 @@
             if (empty) {
                 empty.hidden = visible > 0;
             }
-        });
+        };
+        filter.addEventListener('input', apply);
+        selects.forEach((s) => s.addEventListener('change', apply));
+
+        // Changer le classement recharge la page (le regroupement est fait par le serveur).
+        const group = document.querySelector('[data-kb-group]');
+        if (group && group.form) {
+            group.addEventListener('change', () => group.form.submit());
+        }
 
         // Version statique : la recherche arrive dans l'adresse (?q=...), on l'applique au chargement.
-        const q = new URLSearchParams(window.location.search).get('q');
-        if (q) {
-            filter.value = q;
-            filter.dispatchEvent(new Event('input'));
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('q')) {
+            filter.value = params.get('q');
         }
+        selects.forEach((s) => {
+            const v = params.get(s.dataset.kbSelect);
+            if (v) {
+                s.value = v;
+            }
+        });
+        if (params.toString()) {
+            apply();
+        }
+    }
+
+    // Fiches : bouton « Copier » sur chaque bloc de commandes.
+    document.querySelectorAll('.kb-content pre').forEach((pre) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'code-block';
+        pre.parentNode.insertBefore(wrap, pre);
+        wrap.appendChild(pre);
+        const code = pre.querySelector('code');
+        const lang = code && /language-([a-z0-9_-]+)/.exec(code.className);
+        if (lang) {
+            const label = document.createElement('span');
+            label.className = 'code-lang';
+            label.textContent = lang[1];
+            label.setAttribute('aria-hidden', 'true');
+            wrap.appendChild(label);
+        }
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'copy-button';
+        button.textContent = 'Copier';
+        button.setAttribute('aria-label', 'Copier la commande');
+        button.addEventListener('click', async () => {
+            const text = pre.innerText.replace(/\n$/, '');
+            try {
+                await navigator.clipboard.writeText(text);
+            } catch (err) {
+                // Ancienne méthode si le presse-papiers moderne est refusé.
+                const area = document.createElement('textarea');
+                area.value = text;
+                document.body.appendChild(area);
+                area.select();
+                document.execCommand('copy');
+                area.remove();
+            }
+            button.textContent = 'Copié ✓';
+            setTimeout(() => { button.textContent = 'Copier'; }, 2000);
+        });
+        wrap.appendChild(button);
+    });
+
+    // Fiches : case à cocher sur chaque « ### Étape … » pour suivre sa progression.
+    // Mémorisée seulement dans ce navigateur (localStorage), aucun cookie, rien n'est envoyé.
+    const article = document.querySelector('.kb-article[data-kb-slug]');
+    if (article) {
+        const steps = [...article.querySelectorAll('.kb-content h3')].filter((h) => /^[ée]tape\b/i.test(h.textContent.trim()));
+        const key = 'kb-etapes-' + article.dataset.kbSlug;
+        let done = {};
+        try {
+            done = JSON.parse(localStorage.getItem(key) || '{}') || {};
+        } catch (err) {
+            done = {};
+        }
+        let progress = null;
+        if (steps.length > 1) {
+            progress = document.createElement('p');
+            progress.className = 'kb-progress';
+            progress.setAttribute('aria-live', 'polite');
+            steps[0].parentNode.insertBefore(progress, steps[0]);
+        }
+        const update = () => {
+            if (progress) {
+                const n = steps.filter((h) => done[h.id]).length;
+                progress.textContent = 'Progression : ' + n + ' étape' + (n > 1 ? 's' : '') + ' faite' + (n > 1 ? 's' : '') + ' sur ' + steps.length + '.';
+            }
+        };
+        steps.forEach((h) => {
+            const label = document.createElement('label');
+            label.className = 'step-check';
+            const box = document.createElement('input');
+            box.type = 'checkbox';
+            box.checked = !!done[h.id];
+            h.classList.toggle('step-done', box.checked);
+            box.addEventListener('change', () => {
+                if (box.checked) {
+                    done[h.id] = 1;
+                } else {
+                    delete done[h.id];
+                }
+                h.classList.toggle('step-done', box.checked);
+                try {
+                    localStorage.setItem(key, JSON.stringify(done));
+                } catch (err) {
+                    // Navigation privée : la case fonctionne, mais n'est pas mémorisée.
+                }
+                update();
+            });
+            label.append(box, document.createTextNode('fait'));
+            h.appendChild(label);
+        });
+        update();
     }
 
     // Compétence choisie depuis l'accueil (#b1-2…) : elle est placée au centre de l'écran.
