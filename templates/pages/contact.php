@@ -6,10 +6,10 @@
         <li>E-mail : <a href="mailto:<?= e($profile['email']) ?>"><?= e($profile['email']) ?></a></li>
     <?php endif; ?>
     <?php if (!empty($profile['linkedin'])): ?>
-        <li>LinkedIn : <a href="<?= e($profile['linkedin']) ?>" rel="noopener">mon profil</a></li>
+        <li>LinkedIn : <a href="<?= e($profile['linkedin']) ?>" rel="me noopener">mon profil</a></li>
     <?php endif; ?>
     <?php if (!empty($profile['github'])): ?>
-        <li>GitHub : <a href="<?= e($profile['github']) ?>" rel="noopener">mes dépôts</a></li>
+        <li>GitHub : <a href="<?= e($profile['github']) ?>" rel="me noopener">mes dépôts</a></li>
     <?php endif; ?>
 </ul>
 

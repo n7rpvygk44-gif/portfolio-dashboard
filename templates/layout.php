@@ -74,6 +74,16 @@ $isCurrent = fn (string $href) => $href === '/' ? $path === '/' : str_starts_wit
 <footer class="site-footer">
     <div class="container">
         <p>© <?= date('Y') ?> <?= e($siteName) ?> · Portfolio BTS SIO option SISR · <a href="<?= e(url('/mentions-legales')) ?>">Mentions légales</a></p>
+        <?php if (!empty($profile['linkedin']) || !empty($profile['github'])): ?>
+            <ul class="footer-links">
+                <?php if (!empty($profile['linkedin'])): ?>
+                    <li><a href="<?= e($profile['linkedin']) ?>" rel="me noopener">LinkedIn</a></li>
+                <?php endif; ?>
+                <?php if (!empty($profile['github'])): ?>
+                    <li><a href="<?= e($profile['github']) ?>" rel="me noopener">GitHub</a></li>
+                <?php endif; ?>
+            </ul>
+        <?php endif; ?>
     </div>
 </footer>
 </body>

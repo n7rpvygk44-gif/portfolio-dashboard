@@ -32,7 +32,7 @@
                     <?php endforeach; ?>
                 </select>
             <?php else: ?>
-                <input id="<?= e($id) ?>" name="<?= e($name) ?>" type="<?= $field['type'] === 'date' ? 'date' : 'text' ?>" value="<?= e($value) ?>"<?= !empty($field['required']) ? ' required' : '' ?>>
+                <input id="<?= e($id) ?>" name="<?= e($name) ?>" type="<?= in_array($field['type'], ['date', 'url'], true) ? $field['type'] : 'text' ?>" value="<?= e($value) ?>"<?= !empty($field['required']) ? ' required' : '' ?>>
             <?php endif; ?>
             <?php if (!empty($field['help'])): ?>
                 <small><?= e($field['help']) ?></small>
