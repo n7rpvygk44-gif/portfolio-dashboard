@@ -320,9 +320,6 @@ td.check { text-align: center; color: var(--accent); font-weight: 700; }
     --cd-orange: #ff9a3d;      /* orange flamboyant */
     --cd-orange-light: #ffc061;
     --cd-orange-deep: #ff6a2b;
-    /* Filet d'argent métallique, avec une touche de feu (repris du thème Fondation) */
-    --cd-metal: linear-gradient(115deg, #8e95a3, #e9ecf1 16%, #9aa1b0 32%, #f4f5f8 48%, #a9aebb 62%, #ffb15c 76%, #eef0f4 88%, #8e95a3);
-    --cd-metal-fire: linear-gradient(115deg, #ff6a2b, #ffc061 14%, #f4f5f8 30%, #9aa1b0 44%, #ff9a3d 58%, #ffd28a 70%, #eef0f4 84%, #ff7a1a);
     --cd-silver: #c9ced8;      /* reflets argentés */
     --cd-line: rgba(201, 206, 216, 0.28);
     color-scheme: dark;
@@ -333,20 +330,44 @@ td.check { text-align: center; color: var(--accent); font-weight: 700; }
     --bg: var(--cd-bg); --surface: var(--cd-surface); --surface-strong: var(--cd-surface-strong);
     --text: var(--cd-text); --muted: var(--cd-muted); --border: var(--cd-line);
     --accent: var(--cd-orange); --accent-text: #1d1208; --code-bg: rgba(10, 11, 14, 0.55);
-    --focus: var(--cd-orange); --gold: var(--cd-orange); --glow: var(--cd-orange); --ink: #1d1208;
+    --focus: var(--cd-orange); --gold: #c8952f; --glow: #f3c063; --ink: #1d1208;
     color: var(--cd-text) !important;
-    /* Fond : lueur orangée en haut, reflet argenté en bas, orbites fines en argent */
-    background:
-        radial-gradient(circle at 80% 18%, transparent 0 16vw, rgba(201, 206, 216, 0.07) calc(16vw + 1px), transparent calc(16vw + 2px)),
-        radial-gradient(circle at 80% 18%, transparent 0 30vw, rgba(255, 154, 61, 0.10) calc(30vw + 1px), transparent calc(30vw + 2px)),
-        radial-gradient(ellipse 70% 50% at 45% -10%, rgba(255, 122, 26, 0.22) 0%, transparent 70%),
-        radial-gradient(ellipse 55% 45% at 100% 100%, rgba(201, 206, 216, 0.10) 0%, transparent 70%),
-        linear-gradient(180deg, #1a1b20 0%, #15171c 60%, #121318 100%) fixed !important;
+    /* Fond : ciel de nuit étoilée. Un soleil lointain, hors de l'écran en haut à gauche,
+       répand un fondu orangé qui s'éteint dans le ciel ; une voie lactée très douce le traverse.
+       Les étoiles sont de petits points en dégradé, répétés en motifs de tailles différentes. */
+    background-color: #0e0f14 !important;
+    background-image:
+        radial-gradient(circle at -6% -10%, rgba(255, 214, 160, 0.38) 0, rgba(255, 150, 60, 0.26) 9%, rgba(255, 106, 43, 0.14) 24%, rgba(160, 60, 30, 0.06) 42%, transparent 62%),
+        linear-gradient(118deg, transparent 30%, rgba(201, 206, 216, 0.035) 44%, rgba(255, 180, 110, 0.04) 50%, rgba(201, 206, 216, 0.03) 56%, transparent 70%),
+        radial-gradient(0.7px 0.7px at 43% 21%, rgba(230,234,242,0.55) 0 70%, transparent 100%),
+        radial-gradient(0.5px 0.5px at 11% 70%, rgba(230,234,242,0.55) 0 70%, transparent 100%),
+        radial-gradient(0.5px 0.5px at 66% 29%, rgba(230,234,242,0.4) 0 70%, transparent 100%),
+        radial-gradient(0.6px 0.6px at 55% 10%, rgba(230,234,242,0.4) 0 70%, transparent 100%),
+        radial-gradient(0.5px 0.5px at 9% 74%, rgba(230,234,242,0.55) 0 70%, transparent 100%),
+        radial-gradient(0.7px 0.7px at 82% 82%, rgba(230,234,242,0.55) 0 70%, transparent 100%),
+        radial-gradient(0.7px 0.7px at 75% 76%, rgba(230,234,242,0.55) 0 70%, transparent 100%),
+        radial-gradient(1.1px 1.1px at 7% 73%, rgba(201,206,216,0.6) 0 70%, transparent 100%),
+        radial-gradient(1.0px 1.0px at 55% 20%, rgba(255,206,150,0.55) 0 70%, transparent 100%),
+        radial-gradient(1.1px 1.1px at 41% 73%, rgba(240,243,248,0.75) 0 70%, transparent 100%),
+        radial-gradient(1.0px 1.0px at 15% 76%, rgba(240,243,248,0.75) 0 70%, transparent 100%),
+        radial-gradient(1.0px 1.0px at 49% 14%, rgba(240,243,248,0.75) 0 70%, transparent 100%),
+        radial-gradient(1.0px 1.0px at 74% 9%, rgba(201,206,216,0.6) 0 70%, transparent 100%),
+        radial-gradient(0.9px 0.9px at 89% 70%, rgba(201,206,216,0.6) 0 70%, transparent 100%),
+        radial-gradient(1.6px 1.6px at 61% 76%, rgba(190,210,255,0.75) 0 70%, transparent 100%),
+        radial-gradient(1.6px 1.6px at 40% 33%, rgba(255,190,120,0.8) 0 70%, transparent 100%),
+        radial-gradient(1.4px 1.4px at 33% 12%, rgba(255,190,120,0.8) 0 70%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 65% 45%, rgba(190,210,255,0.75) 0 70%, transparent 100%),
+        radial-gradient(1.1px 1.1px at 79% 11%, rgba(190,210,255,0.75) 0 70%, transparent 100%),
+        radial-gradient(1.2px 1.2px at 23% 98%, rgba(190,210,255,0.75) 0 70%, transparent 100%),
+        linear-gradient(180deg, #14151b 0%, #0f1015 60%, #0b0c10 100%) !important;
+    background-size: 100% 100%, 100% 100%, 173px 173px, 173px 173px, 173px 173px, 173px 173px, 173px 173px, 173px 173px, 173px 173px, 311px 311px, 311px 311px, 311px 311px, 311px 311px, 311px 311px, 311px 311px, 311px 311px, 557px 557px, 557px 557px, 557px 557px, 557px 557px, 557px 557px, 557px 557px, 100% 100% !important;
+    background-repeat: no-repeat, no-repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, repeat, no-repeat !important;
+    background-attachment: fixed !important;
 }
 /* :where() garde ces règles générales peu prioritaires : les règles plus précises ci-dessous passent devant. */
 :root.a11y-contrast-dark body :where(*:not(img, picture, video, canvas, svg, svg *, .sv-swatch, .sound-icon, .fondation-scene, .fondation-scene *, .radiant-sphere, .radiant-sphere *, .radiant-core, .radiant-core *, .radiant-intro .stage, .radiant-intro .stage *)),
-:root.a11y-contrast-dark body :where(*)::before,
-:root.a11y-contrast-dark body :where(*)::after {
+:root.a11y-contrast-dark body :where(*:not(.card, .competence, .sv-panel, .hero))::before,
+:root.a11y-contrast-dark body :where(*:not(.card, .competence, .sv-panel, .hero))::after {
     background-color: transparent !important;
     background-image: none !important;
     color: inherit !important;
@@ -373,57 +394,24 @@ td.check { text-align: center; color: var(--accent); font-weight: 700; }
 }
 :root.a11y-contrast-dark body .site-header,
 :root.a11y-contrast-dark body .a11y { background-color: var(--cd-surface-strong) !important; }
-/* Cadres en argent métallique : un filet dégradé posé par-dessus le bord (::after masqué au centre).
-   Au survol, le filet se teinte de feu et s'anime (l'animation s'arrête avec « Réduire les animations »). */
+/* Cadres : mêmes liserés que le mode standard du thème Fondation (filet or fin, trait de lumière
+   en haut ; au survol, filet or et argent qui scintille), les pseudo-éléments du thème étant conservés. */
 :root.a11y-contrast-dark body .card,
 :root.a11y-contrast-dark body .competence,
 :root.a11y-contrast-dark body .sv-panel,
 :root.a11y-contrast-dark body .hero,
-:root.a11y-contrast-dark body .radiant-nodes a { border: 1px solid transparent !important; position: relative; }
-:root.a11y-contrast-dark body table { border: 1px solid rgba(201, 206, 216, 0.45) !important; }
-:root.a11y-contrast-dark body .card::after,
-:root.a11y-contrast-dark body .competence::after,
-:root.a11y-contrast-dark body .sv-panel::after,
-:root.a11y-contrast-dark body .hero::after,
-:root.a11y-contrast-dark body .radiant-nodes a::after {
-    content: "" !important;
-    position: absolute !important;
-    inset: -1px !important;
-    padding: 1.5px !important;
-    border-radius: inherit !important;
-    background-image: var(--cd-metal) !important;
-    background-size: 300% 100% !important;
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0) !important;
-    -webkit-mask-composite: xor !important;
-    mask-composite: exclude !important;
-    opacity: 0.85 !important;
-    pointer-events: none !important;
-    display: block !important;
-    transform: none !important;
-    animation: none;
-}
-:root.a11y-contrast-dark body .card:hover::after,
-:root.a11y-contrast-dark body .card:focus-within::after,
-:root.a11y-contrast-dark body .competence:hover::after,
-:root.a11y-contrast-dark body .competence:focus-within::after,
-:root.a11y-contrast-dark body .radiant-nodes a:hover::after,
-:root.a11y-contrast-dark body .radiant-nodes a:focus-visible::after {
-    background-image: var(--cd-metal-fire) !important;
-    padding: 2px !important;
-    opacity: 1 !important;
-    animation: cd-sheen 3.5s linear infinite alternate;
-}
+:root.a11y-contrast-dark body .radiant-nodes a { border: 1px solid rgba(200, 149, 47, 0.38) !important; }
+:root.a11y-contrast-dark body .radiant-nodes a { border-top: 2px solid #c8952f !important; }
+:root.a11y-contrast-dark body .radiant-nodes a:hover,
+:root.a11y-contrast-dark body .radiant-nodes a:focus-visible { border-color: #c8952f !important; box-shadow: 0 14px 34px rgba(200, 149, 47, 0.3) !important; }
+:root.a11y-contrast-dark body table { border: 1px solid rgba(200, 149, 47, 0.38) !important; }
 :root.a11y-contrast-dark body .card:hover,
 :root.a11y-contrast-dark body .card:focus-within,
 :root.a11y-contrast-dark body .competence:hover,
-:root.a11y-contrast-dark body .competence:focus-within,
-:root.a11y-contrast-dark body .radiant-nodes a:hover {
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 34px rgba(255, 122, 26, 0.28), 0 14px 34px rgba(0, 0, 0, 0.35) !important;
-}
-@keyframes cd-sheen { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
-:root.a11y-contrast-dark.a11y-motion body *::after { animation: none !important; }
-@media (prefers-reduced-motion: reduce) {
-    :root.a11y-contrast-dark body *::after { animation: none !important; }
+:root.a11y-contrast-dark body .competence:focus-within {
+    border-color: transparent !important;
+    background-color: var(--cd-surface-strong) !important;
+    box-shadow: 0 0 0 5px rgba(14, 15, 20, 0.9), 0 0 0 6px #a9aebb, 0 0 46px rgba(243, 192, 99, 0.35), 0 34px 60px rgba(0, 0, 0, 0.5) !important;
 }
 /* Titres : dégradé argent vers ivoire, le grand titre se termine en orange */
 :root.a11y-contrast-dark body h1 {
