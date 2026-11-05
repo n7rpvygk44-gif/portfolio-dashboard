@@ -70,8 +70,8 @@ final class Admin
         'accroche' => ['label' => 'Accroche (page d\'accueil)', 'type' => 'textarea'],
         'objectif' => ['label' => 'Objectif professionnel', 'type' => 'textarea'],
         'email' => ['label' => 'Adresse e-mail', 'type' => 'text'],
-        'linkedin' => ['label' => 'Lien LinkedIn', 'type' => 'text'],
-        'github' => ['label' => 'Lien GitHub', 'type' => 'text'],
+        'linkedin' => ['label' => 'Lien LinkedIn (https://www.linkedin.com/in/…)', 'type' => 'url'],
+        'github' => ['label' => 'Lien GitHub', 'type' => 'url'],
         'cv' => ['label' => 'Chemin du CV (ex. /assets/cv.pdf)', 'type' => 'text'],
         'parcours' => ['label' => 'Parcours (Markdown)', 'type' => 'markdown'],
         'sujet_veille' => ['label' => 'Sujet de veille', 'type' => 'textarea'],
@@ -85,6 +85,9 @@ final class Admin
             $value = trim((string) ($post[$name] ?? ''));
             if ($field['type'] === 'list') {
                 $value = array_values(array_filter(array_map('trim', explode(',', $value)), 'strlen'));
+            } elseif ($field['type'] === 'url' && !preg_match('#^https://[^\s"<>]+$#i', $value)) {
+                // Seules les adresses en https:// sont gardées : un lien « javascript: » serait dangereux.
+                $value = '';
             } elseif ($field['type'] === 'select' && !in_array($value, $field['options'], true)) {
                 $value = $field['options'][0];
             }
