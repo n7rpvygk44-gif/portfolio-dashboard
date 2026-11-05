@@ -11,9 +11,12 @@
         theme: 'theme-dark',
         large: 'a11y-large',
         contrast: 'a11y-contrast',
+        contrastDark: 'a11y-contrast-dark',
         readable: 'a11y-readable',
         motion: 'a11y-motion',
     };
+
+    const EXCLUSIVE = { contrast: 'contrastDark', contrastDark: 'contrast' };
 
     function loadSettings() {
         try {
@@ -50,6 +53,10 @@
         button.addEventListener('click', () => {
             const key = button.dataset.a11y;
             settings[key] = !settings[key];
+            // Les deux contrastes (clair et sombre) s'excluent : en activer un désactive l'autre.
+            if (settings[key] && EXCLUSIVE[key]) {
+                settings[EXCLUSIVE[key]] = false;
+            }
             applySettings(settings);
             saveSettings(settings);
         });
