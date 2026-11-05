@@ -304,60 +304,131 @@ td.check { text-align: center; color: var(--accent); font-weight: 700; }
 }
 
 /* ===== Contraste sombre (panneau d'accessibilité) =====
-   Texte blanc sur fond noir, liens et boutons en jaune, quel que soit le thème choisi.
-   Les règles sont marquées !important pour passer devant les couleurs propres à chaque thème
-   (dégradés, verre dépoli, lueurs). Rapports de contraste : blanc/noir 21:1, jaune #ffe14d/noir 16:1.
-   Les décors (planète, Radiant, ciel étoilé, pluie de caractères) sont masqués. */
-:root.a11y-contrast-dark { color-scheme: dark; background: #000; }
-:root.a11y-contrast-dark body {
-    --bg: #000; --surface: #000; --surface-strong: #000; --text: #fff; --muted: #fff;
-    --border: #fff; --accent: #ffe14d; --accent-text: #000; --code-bg: #1a1a1a;
-    --focus: #ffe14d; --gold: #ffe14d; --glow: #ffe14d; --ink: #000;
-    background: #000 !important;
-    color: #fff !important;
+   Version adoucie : fond anthracite translucide, texte ivoire, orange chaud et reflets argentés,
+   quel que soit le thème choisi. Les règles sont marquées !important pour passer devant les couleurs
+   propres à chaque thème. Rapports de contraste (WCAG AA demande 4,5:1 pour le texte) :
+   texte ivoire 12:1, texte secondaire 7:1, orange 7,5:1, argent 9,5:1, bouton actif 7:1.
+   Les décors animés (planète, Radiant, ciel étoilé, pluie de caractères) sont masqués. */
+:root.a11y-contrast-dark {
+    --cd-bg: #15171c;          /* anthracite légèrement bleuté */
+    --cd-surface: rgba(38, 40, 47, 0.58);
+    --cd-surface-strong: rgba(44, 46, 54, 0.82);
+    --cd-text: #dedad2;        /* ivoire doux, moins dur que le blanc pur */
+    --cd-muted: #b4b0a8;
+    --cd-orange: #f2a65e;      /* orange chaud */
+    --cd-orange-deep: #e58d45;
+    --cd-silver: #c9ced8;      /* reflets argentés */
+    --cd-line: rgba(201, 206, 216, 0.28);
+    color-scheme: dark;
+    background: var(--cd-bg);
 }
-/* :where() garde ces règles générales peu prioritaires : les liens et boutons ci-dessous passent devant. */
+:root.a11y-contrast-dark body {
+    --bg: var(--cd-bg); --surface: var(--cd-surface); --surface-strong: var(--cd-surface-strong);
+    --text: var(--cd-text); --muted: var(--cd-muted); --border: var(--cd-line);
+    --accent: var(--cd-orange); --accent-text: #1d1208; --code-bg: rgba(10, 11, 14, 0.55);
+    --focus: var(--cd-orange); --gold: var(--cd-orange); --glow: var(--cd-orange); --ink: #1d1208;
+    color: var(--cd-text) !important;
+    /* Fond : lueur orangée en haut, reflet argenté en bas, orbites fines en argent */
+    background:
+        radial-gradient(circle at 80% 18%, transparent 0 16vw, rgba(201, 206, 216, 0.07) calc(16vw + 1px), transparent calc(16vw + 2px)),
+        radial-gradient(circle at 80% 18%, transparent 0 30vw, rgba(242, 166, 94, 0.07) calc(30vw + 1px), transparent calc(30vw + 2px)),
+        radial-gradient(ellipse 70% 50% at 45% -10%, rgba(242, 166, 94, 0.16) 0%, transparent 70%),
+        radial-gradient(ellipse 55% 45% at 100% 100%, rgba(201, 206, 216, 0.10) 0%, transparent 70%),
+        linear-gradient(180deg, #1a1b20 0%, #15171c 60%, #121318 100%) fixed !important;
+}
+/* :where() garde ces règles générales peu prioritaires : les règles plus précises ci-dessous passent devant. */
 :root.a11y-contrast-dark body :where(*:not(img, picture, video, canvas, svg, svg *, .sv-swatch, .sound-icon)),
 :root.a11y-contrast-dark body :where(*)::before,
 :root.a11y-contrast-dark body :where(*)::after {
     background-color: transparent !important;
     background-image: none !important;
-    color: #fff !important;
-    border-color: #fff !important;
+    color: inherit !important;
+    border-color: var(--cd-line) !important;
     box-shadow: none !important;
     text-shadow: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
     -webkit-text-fill-color: currentColor !important;
 }
+/* Surfaces en verre fumé, liseré argenté et reflet en haut */
+:root.a11y-contrast-dark body .site-header,
+:root.a11y-contrast-dark body .a11y,
+:root.a11y-contrast-dark body .site-footer,
+:root.a11y-contrast-dark body .card,
+:root.a11y-contrast-dark body .competence,
+:root.a11y-contrast-dark body .hero,
+:root.a11y-contrast-dark body .sv-panel,
+:root.a11y-contrast-dark body .radiant-nodes a,
+:root.a11y-contrast-dark body table {
+    background-color: var(--cd-surface) !important;
+    background-image: linear-gradient(180deg, rgba(201, 206, 216, 0.07), transparent 40%) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 12px 30px rgba(0, 0, 0, 0.25) !important;
+}
+:root.a11y-contrast-dark body .site-header,
+:root.a11y-contrast-dark body .a11y { background-color: var(--cd-surface-strong) !important; }
+:root.a11y-contrast-dark body .card,
+:root.a11y-contrast-dark body .competence,
+:root.a11y-contrast-dark body .sv-panel,
+:root.a11y-contrast-dark body table { border: 1px solid var(--cd-line) !important; }
+:root.a11y-contrast-dark body .card:hover,
+:root.a11y-contrast-dark body .competence:hover { border-color: rgba(242, 166, 94, 0.55) !important; }
+/* Titres : dégradé argent vers ivoire, le grand titre se termine en orange */
+:root.a11y-contrast-dark body h1 {
+    background-image: linear-gradient(100deg, #e4e7ed 0%, #c9ced8 45%, var(--cd-orange) 100%) !important;
+    -webkit-background-clip: text !important; background-clip: text !important;
+    -webkit-text-fill-color: transparent !important; color: var(--cd-silver) !important;
+}
+:root.a11y-contrast-dark body h2,
+:root.a11y-contrast-dark body h3 { color: #e9e6e0 !important; }
+:root.a11y-contrast-dark body .lead,
+:root.a11y-contrast-dark body .meta,
+:root.a11y-contrast-dark body small { color: var(--cd-muted) !important; }
+:root.a11y-contrast-dark body .subtitle,
+:root.a11y-contrast-dark body .eyebrow { color: var(--cd-silver) !important; }
+/* Liens orange, soulignement discret qui s'affirme au survol */
 :root.a11y-contrast-dark body a,
 :root.a11y-contrast-dark body a *,
-:root.a11y-contrast-dark body summary { color: #ffe14d !important; }
-:root.a11y-contrast-dark body a { text-decoration: underline !important; }
-:root.a11y-contrast-dark body a[aria-current="page"] { text-decoration-thickness: 3px !important; }
+:root.a11y-contrast-dark body summary { color: var(--cd-orange) !important; }
+:root.a11y-contrast-dark body a { text-decoration: underline !important; text-decoration-color: rgba(242, 166, 94, 0.45) !important; text-underline-offset: 0.2em; }
+:root.a11y-contrast-dark body a:hover { text-decoration-color: currentColor !important; }
+:root.a11y-contrast-dark body a[aria-current="page"] { color: var(--cd-silver) !important; text-decoration-color: var(--cd-orange) !important; text-decoration-thickness: 2px !important; }
+/* Boutons : contour orange, rempli d'un dégradé orange au survol ou une fois activés */
 :root.a11y-contrast-dark body button,
-:root.a11y-contrast-dark body .button,
-:root.a11y-contrast-dark body input,
-:root.a11y-contrast-dark body select,
-:root.a11y-contrast-dark body textarea { background-color: #000 !important; color: #ffe14d !important; border: 2px solid #ffe14d !important; }
-:root.a11y-contrast-dark body input,
-:root.a11y-contrast-dark body select,
-:root.a11y-contrast-dark body textarea { color: #fff !important; border-color: #fff !important; }
+:root.a11y-contrast-dark body .button {
+    background-color: rgba(242, 166, 94, 0.08) !important;
+    color: var(--cd-orange) !important;
+    border: 1px solid rgba(242, 166, 94, 0.7) !important;
+    text-decoration: none !important;
+}
 :root.a11y-contrast-dark body button[aria-pressed="true"],
-:root.a11y-contrast-dark body button[aria-pressed="true"] *,
 :root.a11y-contrast-dark body button:hover,
-:root.a11y-contrast-dark body .button:hover { background-color: #ffe14d !important; color: #000 !important; }
+:root.a11y-contrast-dark body .button:hover {
+    background-image: linear-gradient(135deg, #f6b877, var(--cd-orange-deep)) !important;
+    color: #1d1208 !important;
+    border-color: #f6c896 !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 0 0 1px rgba(201, 206, 216, 0.35) !important;
+}
+:root.a11y-contrast-dark body button[aria-pressed="true"] *,
+:root.a11y-contrast-dark body button:hover * { color: #1d1208 !important; }
+:root.a11y-contrast-dark body input,
+:root.a11y-contrast-dark body select,
+:root.a11y-contrast-dark body textarea {
+    background-color: rgba(10, 11, 14, 0.5) !important;
+    color: var(--cd-text) !important;
+    border: 1px solid rgba(201, 206, 216, 0.45) !important;
+}
+:root.a11y-contrast-dark body select option { background-color: #1f2126 !important; }
 :root.a11y-contrast-dark body pre,
-:root.a11y-contrast-dark body code,
-:root.a11y-contrast-dark body .card,
-:root.a11y-contrast-dark body table,
+:root.a11y-contrast-dark body code { background-color: rgba(10, 11, 14, 0.55) !important; border: 1px solid var(--cd-line) !important; color: #e6e1d8 !important; }
+:root.a11y-contrast-dark body pre code { border: 0 !important; background: none !important; }
+:root.a11y-contrast-dark body th { background-color: rgba(201, 206, 216, 0.08) !important; color: var(--cd-silver) !important; }
 :root.a11y-contrast-dark body th,
-:root.a11y-contrast-dark body td { border: 1px solid #fff !important; }
-:root.a11y-contrast-dark body pre code { border: 0 !important; }
-:root.a11y-contrast-dark body ::placeholder { color: #d0d0d0 !important; }
+:root.a11y-contrast-dark body td { border-bottom: 1px solid var(--cd-line) !important; }
+:root.a11y-contrast-dark body hr { border-color: var(--cd-line) !important; }
+:root.a11y-contrast-dark body ::placeholder { color: #9aa0aa !important; }
 :root.a11y-contrast-dark body .sound-icon { background-color: currentColor !important; }
-:root.a11y-contrast-dark body :focus-visible { outline: 3px solid #ffe14d !important; outline-offset: 3px !important; }
-:root.a11y-contrast-dark body svg text { fill: #fff !important; }
+:root.a11y-contrast-dark body :focus-visible { outline: 2px solid var(--cd-orange) !important; outline-offset: 3px !important; }
+:root.a11y-contrast-dark body svg text { fill: var(--cd-text) !important; }
 :root.a11y-contrast-dark .fondation-scene,
 :root.a11y-contrast-dark .radiant-sphere,
 :root.a11y-contrast-dark .space-layer,
