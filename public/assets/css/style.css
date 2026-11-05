@@ -309,7 +309,8 @@ td.check { text-align: center; color: var(--accent); font-weight: 700; }
    quel que soit le thème choisi. Les règles sont marquées !important pour passer devant les couleurs
    propres à chaque thème. Rapports de contraste (WCAG AA demande 4,5:1 pour le texte) :
    texte ivoire 12:1, texte secondaire 7:1, orange 6,6:1 sur les cartes, argent 9,5:1, bouton actif 6,6:1.
-   Les décors animés (planète, Radiant, ciel étoilé, pluie de caractères) sont masqués. */
+   Avec le thème Fondation, Trantor, le Radiant et la cinématique restent affichés, en version nuit.
+   Les décors des autres thèmes (ciel étoilé, pluie de caractères) sont masqués. */
 :root.a11y-contrast-dark {
     --cd-bg: #15171c;          /* anthracite légèrement bleuté */
     --cd-surface: rgba(38, 40, 47, 0.58);
@@ -325,7 +326,8 @@ td.check { text-align: center; color: var(--accent); font-weight: 700; }
     --cd-silver: #c9ced8;      /* reflets argentés */
     --cd-line: rgba(201, 206, 216, 0.28);
     color-scheme: dark;
-    background: var(--cd-bg);
+    /* Pas de fond sur <html> : celui de <body> s'étend alors à toute la fenêtre,
+       et les décors placés derrière la page (Trantor) restent visibles. */
 }
 :root.a11y-contrast-dark body {
     --bg: var(--cd-bg); --surface: var(--cd-surface); --surface-strong: var(--cd-surface-strong);
@@ -342,7 +344,7 @@ td.check { text-align: center; color: var(--accent); font-weight: 700; }
         linear-gradient(180deg, #1a1b20 0%, #15171c 60%, #121318 100%) fixed !important;
 }
 /* :where() garde ces règles générales peu prioritaires : les règles plus précises ci-dessous passent devant. */
-:root.a11y-contrast-dark body :where(*:not(img, picture, video, canvas, svg, svg *, .sv-swatch, .sound-icon)),
+:root.a11y-contrast-dark body :where(*:not(img, picture, video, canvas, svg, svg *, .sv-swatch, .sound-icon, .fondation-scene, .fondation-scene *, .radiant-sphere, .radiant-sphere *, .radiant-core, .radiant-core *, .radiant-intro .stage, .radiant-intro .stage *)),
 :root.a11y-contrast-dark body :where(*)::before,
 :root.a11y-contrast-dark body :where(*)::after {
     background-color: transparent !important;
@@ -480,7 +482,21 @@ td.check { text-align: center; color: var(--accent); font-weight: 700; }
 :root.a11y-contrast-dark body .sound-icon { background-color: currentColor !important; }
 :root.a11y-contrast-dark body :focus-visible { outline: 2px solid var(--cd-orange) !important; outline-offset: 3px !important; }
 :root.a11y-contrast-dark body svg text { fill: var(--cd-text) !important; }
-:root.a11y-contrast-dark .fondation-scene,
-:root.a11y-contrast-dark .radiant-sphere,
+/* Thème Fondation : on garde Trantor, le Radiant, l'introduction et la cinématique, version nuit */
+:root.a11y-contrast-dark .fondation-scene .planet-crop {
+    box-shadow: 0 0 0 1px rgba(255, 154, 61, 0.65), 0 0 0 6px rgba(21, 23, 28, 0.9), 0 0 0 7px rgba(201, 206, 216, 0.6), 0 0 60px rgba(255, 122, 26, 0.25);
+}
+:root.a11y-contrast-dark .fondation-scene .orbit { border-color: rgba(201, 206, 216, 0.35); }
+:root.a11y-contrast-dark .fondation-scene .tag { color: var(--cd-silver); }
+:root.a11y-contrast-dark body .radiant-intro {
+    background: radial-gradient(circle at 50% 45%, #2a2420 0%, #17181d 50%, #0f1014 100%) !important;
+}
+:root.a11y-contrast-dark body .radiant-intro .title { color: var(--cd-silver) !important; }
+:root.a11y-contrast-dark body .radiant-intro .title span,
+:root.a11y-contrast-dark body .radiant-intro .ring text { color: var(--cd-orange) !important; fill: var(--cd-orange) !important; }
+:root.a11y-contrast-dark body .radiant-intro .gate .hint { color: var(--cd-muted) !important; }
+:root.a11y-contrast-dark body.theme-fondation main > section > h2::before { color: var(--cd-orange) !important; }
+:root.a11y-contrast-dark body.theme-fondation main > h1::before,
+:root.a11y-contrast-dark body.theme-fondation article > h1::before { color: var(--cd-orange) !important; }
 :root.a11y-contrast-dark .space-layer,
 :root.a11y-contrast-dark .matrix-rain { display: none !important; }
