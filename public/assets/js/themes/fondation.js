@@ -1072,7 +1072,7 @@
     // ----- Cinématique -----
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
         || root.classList.contains('a11y-motion')
-        || root.classList.contains('a11y-contrast');
+        || (root.classList.contains('a11y-contrast') || root.classList.contains('a11y-contrast-dark'));
     if (reduce || !('IntersectionObserver' in window)) {
         return;
     }

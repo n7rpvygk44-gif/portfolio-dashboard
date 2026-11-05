@@ -22,7 +22,7 @@
     function allowed() {
         return !reducedMotion.matches
             && !root.classList.contains('a11y-motion')
-            && !root.classList.contains('a11y-contrast')
+            && !(root.classList.contains('a11y-contrast') || root.classList.contains('a11y-contrast-dark'))
             && !document.hidden;
     }
 

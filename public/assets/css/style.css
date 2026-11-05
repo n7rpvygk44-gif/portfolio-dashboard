@@ -302,3 +302,63 @@ td.check { text-align: center; color: var(--accent); font-weight: 700; }
 @media (max-width: 760px) {
     .supervision { grid-template-columns: 1fr; }
 }
+
+/* ===== Contraste sombre (panneau d'accessibilité) =====
+   Texte blanc sur fond noir, liens et boutons en jaune, quel que soit le thème choisi.
+   Les règles sont marquées !important pour passer devant les couleurs propres à chaque thème
+   (dégradés, verre dépoli, lueurs). Rapports de contraste : blanc/noir 21:1, jaune #ffe14d/noir 16:1.
+   Les décors (planète, Radiant, ciel étoilé, pluie de caractères) sont masqués. */
+:root.a11y-contrast-dark { color-scheme: dark; background: #000; }
+:root.a11y-contrast-dark body {
+    --bg: #000; --surface: #000; --surface-strong: #000; --text: #fff; --muted: #fff;
+    --border: #fff; --accent: #ffe14d; --accent-text: #000; --code-bg: #1a1a1a;
+    --focus: #ffe14d; --gold: #ffe14d; --glow: #ffe14d; --ink: #000;
+    background: #000 !important;
+    color: #fff !important;
+}
+/* :where() garde ces règles générales peu prioritaires : les liens et boutons ci-dessous passent devant. */
+:root.a11y-contrast-dark body :where(*:not(img, picture, video, canvas, svg, svg *, .sv-swatch, .sound-icon)),
+:root.a11y-contrast-dark body :where(*)::before,
+:root.a11y-contrast-dark body :where(*)::after {
+    background-color: transparent !important;
+    background-image: none !important;
+    color: #fff !important;
+    border-color: #fff !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    -webkit-text-fill-color: currentColor !important;
+}
+:root.a11y-contrast-dark body a,
+:root.a11y-contrast-dark body a *,
+:root.a11y-contrast-dark body summary { color: #ffe14d !important; }
+:root.a11y-contrast-dark body a { text-decoration: underline !important; }
+:root.a11y-contrast-dark body a[aria-current="page"] { text-decoration-thickness: 3px !important; }
+:root.a11y-contrast-dark body button,
+:root.a11y-contrast-dark body .button,
+:root.a11y-contrast-dark body input,
+:root.a11y-contrast-dark body select,
+:root.a11y-contrast-dark body textarea { background-color: #000 !important; color: #ffe14d !important; border: 2px solid #ffe14d !important; }
+:root.a11y-contrast-dark body input,
+:root.a11y-contrast-dark body select,
+:root.a11y-contrast-dark body textarea { color: #fff !important; border-color: #fff !important; }
+:root.a11y-contrast-dark body button[aria-pressed="true"],
+:root.a11y-contrast-dark body button[aria-pressed="true"] *,
+:root.a11y-contrast-dark body button:hover,
+:root.a11y-contrast-dark body .button:hover { background-color: #ffe14d !important; color: #000 !important; }
+:root.a11y-contrast-dark body pre,
+:root.a11y-contrast-dark body code,
+:root.a11y-contrast-dark body .card,
+:root.a11y-contrast-dark body table,
+:root.a11y-contrast-dark body th,
+:root.a11y-contrast-dark body td { border: 1px solid #fff !important; }
+:root.a11y-contrast-dark body pre code { border: 0 !important; }
+:root.a11y-contrast-dark body ::placeholder { color: #d0d0d0 !important; }
+:root.a11y-contrast-dark body .sound-icon { background-color: currentColor !important; }
+:root.a11y-contrast-dark body :focus-visible { outline: 3px solid #ffe14d !important; outline-offset: 3px !important; }
+:root.a11y-contrast-dark body svg text { fill: #fff !important; }
+:root.a11y-contrast-dark .fondation-scene,
+:root.a11y-contrast-dark .radiant-sphere,
+:root.a11y-contrast-dark .space-layer,
+:root.a11y-contrast-dark .matrix-rain { display: none !important; }

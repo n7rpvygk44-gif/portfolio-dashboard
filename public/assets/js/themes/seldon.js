@@ -31,7 +31,7 @@
     function allowed() {
         return !reducedMotion.matches
             && !root.classList.contains('a11y-motion')
-            && !root.classList.contains('a11y-contrast')
+            && !(root.classList.contains('a11y-contrast') || root.classList.contains('a11y-contrast-dark'))
             && !document.hidden;
     }
 
@@ -59,7 +59,7 @@
             skyCtx.fill();
         }
         skyCtx.globalAlpha = 1;
-        sky.hidden = root.classList.contains('a11y-contrast');
+        sky.hidden = (root.classList.contains('a11y-contrast') || root.classList.contains('a11y-contrast-dark'));
     }
 
     function resize() {
@@ -90,7 +90,7 @@
     }
 
     function update() {
-        sky.hidden = root.classList.contains('a11y-contrast');
+        sky.hidden = (root.classList.contains('a11y-contrast') || root.classList.contains('a11y-contrast-dark'));
         if (allowed() && timer === null) {
             rain.hidden = false;
             timer = window.setInterval(draw, 60);

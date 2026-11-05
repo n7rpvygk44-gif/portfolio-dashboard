@@ -6,6 +6,7 @@
             <button type="button" data-a11y="theme" aria-pressed="false">Mode sombre</button>
             <button type="button" data-a11y="large" aria-pressed="false">Texte agrandi</button>
             <button type="button" data-a11y="contrast" aria-pressed="false">Contraste renforcé</button>
+            <button type="button" data-a11y="contrastDark" aria-pressed="false">Contraste sombre</button>
             <button type="button" data-a11y="readable" aria-pressed="false">Lecture facilitée</button>
             <button type="button" data-a11y="motion" aria-pressed="false">Réduire les animations</button>
             <button type="button" data-a11y-reset>Réinitialiser</button>
