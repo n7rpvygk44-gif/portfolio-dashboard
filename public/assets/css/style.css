@@ -304,10 +304,11 @@ td.check { text-align: center; color: var(--accent); font-weight: 700; }
 }
 
 /* ===== Contraste sombre (panneau d'accessibilité) =====
-   Version adoucie : fond anthracite translucide, texte ivoire, orange chaud et reflets argentés,
+   Version adoucie : fond anthracite translucide, texte ivoire, orange flamboyant et cadres en argent
+   métallique (même filet que le thème Fondation),
    quel que soit le thème choisi. Les règles sont marquées !important pour passer devant les couleurs
    propres à chaque thème. Rapports de contraste (WCAG AA demande 4,5:1 pour le texte) :
-   texte ivoire 12:1, texte secondaire 7:1, orange 7,5:1, argent 9,5:1, bouton actif 7:1.
+   texte ivoire 12:1, texte secondaire 7:1, orange 6,6:1 sur les cartes, argent 9,5:1, bouton actif 6,6:1.
    Les décors animés (planète, Radiant, ciel étoilé, pluie de caractères) sont masqués. */
 :root.a11y-contrast-dark {
     --cd-bg: #15171c;          /* anthracite légèrement bleuté */
@@ -315,8 +316,12 @@ td.check { text-align: center; color: var(--accent); font-weight: 700; }
     --cd-surface-strong: rgba(44, 46, 54, 0.82);
     --cd-text: #dedad2;        /* ivoire doux, moins dur que le blanc pur */
     --cd-muted: #b4b0a8;
-    --cd-orange: #f2a65e;      /* orange chaud */
-    --cd-orange-deep: #e58d45;
+    --cd-orange: #ff9a3d;      /* orange flamboyant */
+    --cd-orange-light: #ffc061;
+    --cd-orange-deep: #ff6a2b;
+    /* Filet d'argent métallique, avec une touche de feu (repris du thème Fondation) */
+    --cd-metal: linear-gradient(115deg, #8e95a3, #e9ecf1 16%, #9aa1b0 32%, #f4f5f8 48%, #a9aebb 62%, #ffb15c 76%, #eef0f4 88%, #8e95a3);
+    --cd-metal-fire: linear-gradient(115deg, #ff6a2b, #ffc061 14%, #f4f5f8 30%, #9aa1b0 44%, #ff9a3d 58%, #ffd28a 70%, #eef0f4 84%, #ff7a1a);
     --cd-silver: #c9ced8;      /* reflets argentés */
     --cd-line: rgba(201, 206, 216, 0.28);
     color-scheme: dark;
@@ -331,8 +336,8 @@ td.check { text-align: center; color: var(--accent); font-weight: 700; }
     /* Fond : lueur orangée en haut, reflet argenté en bas, orbites fines en argent */
     background:
         radial-gradient(circle at 80% 18%, transparent 0 16vw, rgba(201, 206, 216, 0.07) calc(16vw + 1px), transparent calc(16vw + 2px)),
-        radial-gradient(circle at 80% 18%, transparent 0 30vw, rgba(242, 166, 94, 0.07) calc(30vw + 1px), transparent calc(30vw + 2px)),
-        radial-gradient(ellipse 70% 50% at 45% -10%, rgba(242, 166, 94, 0.16) 0%, transparent 70%),
+        radial-gradient(circle at 80% 18%, transparent 0 30vw, rgba(255, 154, 61, 0.10) calc(30vw + 1px), transparent calc(30vw + 2px)),
+        radial-gradient(ellipse 70% 50% at 45% -10%, rgba(255, 122, 26, 0.22) 0%, transparent 70%),
         radial-gradient(ellipse 55% 45% at 100% 100%, rgba(201, 206, 216, 0.10) 0%, transparent 70%),
         linear-gradient(180deg, #1a1b20 0%, #15171c 60%, #121318 100%) fixed !important;
 }
@@ -366,15 +371,61 @@ td.check { text-align: center; color: var(--accent); font-weight: 700; }
 }
 :root.a11y-contrast-dark body .site-header,
 :root.a11y-contrast-dark body .a11y { background-color: var(--cd-surface-strong) !important; }
+/* Cadres en argent métallique : un filet dégradé posé par-dessus le bord (::after masqué au centre).
+   Au survol, le filet se teinte de feu et s'anime (l'animation s'arrête avec « Réduire les animations »). */
 :root.a11y-contrast-dark body .card,
 :root.a11y-contrast-dark body .competence,
 :root.a11y-contrast-dark body .sv-panel,
-:root.a11y-contrast-dark body table { border: 1px solid var(--cd-line) !important; }
+:root.a11y-contrast-dark body .hero,
+:root.a11y-contrast-dark body .radiant-nodes a { border: 1px solid transparent !important; position: relative; }
+:root.a11y-contrast-dark body table { border: 1px solid rgba(201, 206, 216, 0.45) !important; }
+:root.a11y-contrast-dark body .card::after,
+:root.a11y-contrast-dark body .competence::after,
+:root.a11y-contrast-dark body .sv-panel::after,
+:root.a11y-contrast-dark body .hero::after,
+:root.a11y-contrast-dark body .radiant-nodes a::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: -1px !important;
+    padding: 1.5px !important;
+    border-radius: inherit !important;
+    background-image: var(--cd-metal) !important;
+    background-size: 300% 100% !important;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0) !important;
+    -webkit-mask-composite: xor !important;
+    mask-composite: exclude !important;
+    opacity: 0.85 !important;
+    pointer-events: none !important;
+    display: block !important;
+    transform: none !important;
+    animation: none;
+}
+:root.a11y-contrast-dark body .card:hover::after,
+:root.a11y-contrast-dark body .card:focus-within::after,
+:root.a11y-contrast-dark body .competence:hover::after,
+:root.a11y-contrast-dark body .competence:focus-within::after,
+:root.a11y-contrast-dark body .radiant-nodes a:hover::after,
+:root.a11y-contrast-dark body .radiant-nodes a:focus-visible::after {
+    background-image: var(--cd-metal-fire) !important;
+    padding: 2px !important;
+    opacity: 1 !important;
+    animation: cd-sheen 3.5s linear infinite alternate;
+}
 :root.a11y-contrast-dark body .card:hover,
-:root.a11y-contrast-dark body .competence:hover { border-color: rgba(242, 166, 94, 0.55) !important; }
+:root.a11y-contrast-dark body .card:focus-within,
+:root.a11y-contrast-dark body .competence:hover,
+:root.a11y-contrast-dark body .competence:focus-within,
+:root.a11y-contrast-dark body .radiant-nodes a:hover {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 34px rgba(255, 122, 26, 0.28), 0 14px 34px rgba(0, 0, 0, 0.35) !important;
+}
+@keyframes cd-sheen { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+:root.a11y-contrast-dark.a11y-motion body *::after { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+    :root.a11y-contrast-dark body *::after { animation: none !important; }
+}
 /* Titres : dégradé argent vers ivoire, le grand titre se termine en orange */
 :root.a11y-contrast-dark body h1 {
-    background-image: linear-gradient(100deg, #e4e7ed 0%, #c9ced8 45%, var(--cd-orange) 100%) !important;
+    background-image: linear-gradient(100deg, #eef0f4 0%, #b9bfcb 38%, var(--cd-orange-light) 62%, var(--cd-orange) 80%, var(--cd-orange-deep) 100%) !important;
     -webkit-background-clip: text !important; background-clip: text !important;
     -webkit-text-fill-color: transparent !important; color: var(--cd-silver) !important;
 }
@@ -389,27 +440,27 @@ td.check { text-align: center; color: var(--accent); font-weight: 700; }
 :root.a11y-contrast-dark body a,
 :root.a11y-contrast-dark body a *,
 :root.a11y-contrast-dark body summary { color: var(--cd-orange) !important; }
-:root.a11y-contrast-dark body a { text-decoration: underline !important; text-decoration-color: rgba(242, 166, 94, 0.45) !important; text-underline-offset: 0.2em; }
+:root.a11y-contrast-dark body a { text-decoration: underline !important; text-decoration-color: rgba(255, 154, 61, 0.5) !important; text-underline-offset: 0.2em; }
 :root.a11y-contrast-dark body a:hover { text-decoration-color: currentColor !important; }
 :root.a11y-contrast-dark body a[aria-current="page"] { color: var(--cd-silver) !important; text-decoration-color: var(--cd-orange) !important; text-decoration-thickness: 2px !important; }
 /* Boutons : contour orange, rempli d'un dégradé orange au survol ou une fois activés */
 :root.a11y-contrast-dark body button,
 :root.a11y-contrast-dark body .button {
-    background-color: rgba(242, 166, 94, 0.08) !important;
+    background-color: rgba(255, 154, 61, 0.08) !important;
     color: var(--cd-orange) !important;
-    border: 1px solid rgba(242, 166, 94, 0.7) !important;
+    border: 1px solid rgba(255, 154, 61, 0.75) !important;
     text-decoration: none !important;
 }
 :root.a11y-contrast-dark body button[aria-pressed="true"],
 :root.a11y-contrast-dark body button:hover,
 :root.a11y-contrast-dark body .button:hover {
-    background-image: linear-gradient(135deg, #f6b877, var(--cd-orange-deep)) !important;
-    color: #1d1208 !important;
-    border-color: #f6c896 !important;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 0 0 1px rgba(201, 206, 216, 0.35) !important;
+    background-image: linear-gradient(135deg, var(--cd-orange-light), #ff8a2b 50%, var(--cd-orange-deep)) !important;
+    color: #1d0e04 !important;
+    border-color: #ffd28a !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 0 0 1px rgba(233, 236, 241, 0.55), 0 0 18px rgba(255, 122, 26, 0.45) !important;
 }
 :root.a11y-contrast-dark body button[aria-pressed="true"] *,
-:root.a11y-contrast-dark body button:hover * { color: #1d1208 !important; }
+:root.a11y-contrast-dark body button:hover * { color: #1d0e04 !important; }
 :root.a11y-contrast-dark body input,
 :root.a11y-contrast-dark body select,
 :root.a11y-contrast-dark body textarea {
@@ -421,7 +472,7 @@ td.check { text-align: center; color: var(--accent); font-weight: 700; }
 :root.a11y-contrast-dark body pre,
 :root.a11y-contrast-dark body code { background-color: rgba(10, 11, 14, 0.55) !important; border: 1px solid var(--cd-line) !important; color: #e6e1d8 !important; }
 :root.a11y-contrast-dark body pre code { border: 0 !important; background: none !important; }
-:root.a11y-contrast-dark body th { background-color: rgba(201, 206, 216, 0.08) !important; color: var(--cd-silver) !important; }
+:root.a11y-contrast-dark body th { background-color: rgba(201, 206, 216, 0.1) !important; color: var(--cd-silver) !important; }
 :root.a11y-contrast-dark body th,
 :root.a11y-contrast-dark body td { border-bottom: 1px solid var(--cd-line) !important; }
 :root.a11y-contrast-dark body hr { border-color: var(--cd-line) !important; }
