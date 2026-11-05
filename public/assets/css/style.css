@@ -366,16 +366,18 @@ td.check { text-align: center; color: var(--accent); font-weight: 700; }
 }
 /* :where() garde ces règles générales peu prioritaires : les règles plus précises ci-dessous passent devant. */
 :root.a11y-contrast-dark body :where(*:not(img, picture, video, canvas, svg, svg *, .sv-swatch, .sound-icon, .fondation-scene, .fondation-scene *, .radiant-sphere, .radiant-sphere *, .radiant-core, .radiant-core *, .radiant-intro .stage, .radiant-intro .stage *)),
-:root.a11y-contrast-dark body :where(*:not(.card, .competence, .sv-panel, .hero))::before,
+:root.a11y-contrast-dark body :where(*:not(.card, .competence, .sv-panel, .hero, .brand))::before,
 :root.a11y-contrast-dark body :where(*:not(.card, .competence, .sv-panel, .hero))::after {
     background-color: transparent !important;
     background-image: none !important;
     color: inherit !important;
     border-color: var(--cd-line) !important;
-    box-shadow: none !important;
     text-shadow: none !important;
     -webkit-text-fill-color: currentColor !important;
 }
+/* Ombres claires du thème retirées, sauf sur les éléments animés du thème Fondation
+   (une ombre !important bloquerait leurs animations : éclat doré d'apparition, halos au survol). */
+:root.a11y-contrast-dark body :where(*:not(.card, .competence, .hero, .sv-panel, .radiant-nodes a, .code, .sound-toggle, .radiant-intro .activate, .radiant-core, .radiant-core *, .fondation-scene *)) { box-shadow: none !important; }
 /* Surfaces en verre fumé, liseré argenté et reflet en haut */
 :root.a11y-contrast-dark body .site-header,
 :root.a11y-contrast-dark body .a11y,
@@ -390,7 +392,7 @@ td.check { text-align: center; color: var(--accent); font-weight: 700; }
     background-image: linear-gradient(180deg, rgba(201, 206, 216, 0.07), transparent 40%) !important;
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 12px 30px rgba(0, 0, 0, 0.25) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 12px 30px rgba(0, 0, 0, 0.25);
 }
 :root.a11y-contrast-dark body .site-header,
 :root.a11y-contrast-dark body .a11y { background-color: var(--cd-surface-strong) !important; }
@@ -403,16 +405,31 @@ td.check { text-align: center; color: var(--accent); font-weight: 700; }
 :root.a11y-contrast-dark body .radiant-nodes a { border: 1px solid rgba(200, 149, 47, 0.38) !important; }
 :root.a11y-contrast-dark body .radiant-nodes a { border-top: 2px solid #c8952f !important; }
 :root.a11y-contrast-dark body .radiant-nodes a:hover,
-:root.a11y-contrast-dark body .radiant-nodes a:focus-visible { border-color: #c8952f !important; box-shadow: 0 14px 34px rgba(200, 149, 47, 0.3) !important; }
+:root.a11y-contrast-dark body .radiant-nodes a:focus-visible { border-color: #c8952f !important; box-shadow: 0 14px 34px rgba(200, 149, 47, 0.3); }
 :root.a11y-contrast-dark body table { border: 1px solid rgba(200, 149, 47, 0.38) !important; }
 :root.a11y-contrast-dark body .card:hover,
 :root.a11y-contrast-dark body .card:focus-within,
 :root.a11y-contrast-dark body .competence:hover,
-:root.a11y-contrast-dark body .competence:focus-within {
+:root.a11y-contrast-dark body .competence:focus-within,
+:root.a11y-contrast-dark body .competence:target {
     border-color: transparent !important;
     background-color: var(--cd-surface-strong) !important;
-    box-shadow: 0 0 0 5px rgba(14, 15, 20, 0.9), 0 0 0 6px #a9aebb, 0 0 46px rgba(243, 192, 99, 0.35), 0 34px 60px rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0 0 0 5px rgba(14, 15, 20, 0.9), 0 0 0 6px #a9aebb, 0 0 46px rgba(243, 192, 99, 0.35), 0 34px 60px rgba(0, 0, 0, 0.5);
 }
+/* Autres effets du mode standard, transposés dans la nuit */
+:root.a11y-contrast-dark body .competence:hover h2,
+:root.a11y-contrast-dark body .competence:focus-within h2,
+:root.a11y-contrast-dark body .competence:target h2 { color: var(--cd-orange) !important; }
+:root.a11y-contrast-dark body .code { background-color: #0b0c10 !important; color: #f3c063 !important; box-shadow: 0 0 0 1px rgba(200, 149, 47, 0.45); }
+:root.a11y-contrast-dark body .competence:hover .code,
+:root.a11y-contrast-dark body .competence:focus-within .code { box-shadow: 0 0 0 1px #c8952f, 0 0 0 3px #a9aebb, 0 0 16px rgba(243, 192, 99, 0.8); }
+:root.a11y-contrast-dark body .sound-toggle { background-color: var(--cd-surface-strong) !important; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35); }
+:root.a11y-contrast-dark body .sound-toggle[aria-pressed="true"] { border-color: #c8952f !important; box-shadow: 0 0 18px rgba(243, 192, 99, 0.6); }
+:root.a11y-contrast-dark body .radiant-intro .activate { box-shadow: 0 0 0 1px #c8952f, 0 10px 30px rgba(200, 149, 47, 0.35); }
+:root.a11y-contrast-dark body .brand { color: var(--cd-text) !important; text-decoration: none !important; }
+:root.a11y-contrast-dark body .brand:hover { color: var(--cd-orange) !important; }
+:root.a11y-contrast-dark body .main-nav a:hover,
+:root.a11y-contrast-dark body a:hover { color: #ffd28a !important; }
 /* Titres : dégradé argent vers ivoire, le grand titre se termine en orange */
 :root.a11y-contrast-dark body h1 {
     background-image: linear-gradient(100deg, #eef0f4 0%, #b9bfcb 38%, var(--cd-orange-light) 62%, var(--cd-orange) 80%, var(--cd-orange-deep) 100%) !important;
