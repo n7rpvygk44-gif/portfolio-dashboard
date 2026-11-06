@@ -101,7 +101,7 @@ main:focus { outline: none; }
 /* ===== Bouton du son ===== */
 .sound-toggle {
     position: fixed;
-    left: 1rem;
+    right: 1rem;
     bottom: 1rem;
     z-index: 90;
     display: inline-flex;
@@ -127,6 +127,8 @@ main:focus { outline: none; }
 .a11y { background: var(--surface); border-bottom: 1px solid var(--border); font-size: 0.9rem; }
 .a11y summary { cursor: pointer; padding: 0.4rem 0; color: var(--muted); }
 .a11y-options { display: flex; flex-wrap: wrap; gap: 0.5rem; padding-bottom: 0.75rem; }
+/* Pendant l'écran d'accueil de l'introduction (thème Fondation), le panneau reste accessible au-dessus. */
+body:has(> .radiant-intro:not(.short)) .a11y { position: fixed; top: 0; left: 0; right: 0; z-index: 110; }
 
 /* ===== Boutons et formulaires ===== */
 button, .button {
@@ -494,7 +496,12 @@ td.check { text-align: center; color: var(--accent); font-weight: 700; }
 :root.a11y-contrast-dark .fondation-scene .orbit { border-color: rgba(201, 206, 216, 0.35); }
 :root.a11y-contrast-dark .fondation-scene .tag { color: var(--cd-silver); }
 :root.a11y-contrast-dark body .radiant-intro {
-    background: radial-gradient(circle at 50% 45%, #2a2420 0%, #17181d 50%, #0f1014 100%) !important;
+    /* Même ciel étoilé que les pages, avec le soleil lointain */
+    background-color: #0e0f14 !important;
+    background-image: inherit !important;
+    background-size: inherit !important;
+    background-repeat: inherit !important;
+    background-attachment: inherit !important;
 }
 :root.a11y-contrast-dark body .radiant-intro .title { color: var(--cd-silver) !important; }
 :root.a11y-contrast-dark body .radiant-intro .title span,

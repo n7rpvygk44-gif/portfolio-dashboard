@@ -1265,6 +1265,13 @@
         }
     }
     document.addEventListener('keydown', onKey);
+    // Réglage choisi pendant l'introduction (panneau d'accessibilité resté visible) :
+    // moins d'animations ou contraste renforcé la referment aussitôt.
+    document.addEventListener('a11y-change', () => {
+        if (root.classList.contains('a11y-motion') || root.classList.contains('a11y-contrast')) {
+            finish();
+        }
+    });
     intro.addEventListener('click', () => {
         if (seen) {
             finish();

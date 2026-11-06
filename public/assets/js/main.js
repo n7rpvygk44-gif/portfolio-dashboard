@@ -47,6 +47,11 @@
     }
 
     let settings = loadSettings();
+    // Réglages enregistrés avec les deux contrastes à la fois : on garde le contraste sombre.
+    if (settings.contrast && settings.contrastDark) {
+        settings.contrast = false;
+        saveSettings(settings);
+    }
     applySettings(settings);
 
     document.querySelectorAll('[data-a11y]').forEach((button) => {
@@ -59,6 +64,7 @@
             }
             applySettings(settings);
             saveSettings(settings);
+            document.dispatchEvent(new CustomEvent('a11y-change', { detail: settings }));
         });
     });
 
@@ -68,6 +74,7 @@
             settings = {};
             applySettings(settings);
             saveSettings(settings);
+            document.dispatchEvent(new CustomEvent('a11y-change', { detail: settings }));
         });
     }
 
