@@ -99,6 +99,16 @@ Fiches pas à pas pour reproduire les réalisations (`data/kb.json`, modifiables
 - **Recherche et filtres** : texte, domaine, type, niveau (côté serveur, et instantané en JavaScript), index de A à Z.
 - **Référencement** : données structurées TechArticle, BreadcrumbList et HowTo (`src/Kb.php`), date `lastmod` du sitemap tirée de la dernière vérification.
 
+## Contexte
+
+Fonctionnalité qui explique **pourquoi** chaque logiciel est utilisé dans les réalisations, et propose les étapes pour construire un environnement informatique fondamental, entièrement autonome et personnel.
+
+- **Onglet « Contexte »** sur chaque réalisation, à côté de « Présentation » et « Reproduire ce projet » : les logiciels du projet (champ « logiciels » de la réalisation), rangés par étape, avec leur rôle, la raison du choix et d'autres usages possibles. Sans JavaScript, les onglets restent des liens vers des sections toutes visibles ; avec JavaScript, ce sont de vrais onglets accessibles au clavier (flèches), et l'adresse `#onglet-contexte` ou `#reproduire` ouvre le bon onglet.
+- **Page `/contexte`** : définition, les étapes dans l'ordre, et le catalogue des logiciels (ceux utilisés dans mes projets, puis ceux proposés pour aller plus loin).
+- **Pages `/contexte/<étape>`** (marche à suivre, logiciels conseillés, fiches de la base de connaissances, précédent / suivant) et **`/contexte/logiciels/<logiciel>`** (rôle, pourquoi, réalisations qui l'utilisent, autres usages, alternatives).
+- **Données** : `data/contexte.json` (étapes) et `data/logiciels.json` (logiciels), modifiables dans **Contenu › Contexte : étapes** et **Contenu › Contexte : logiciels**. Une étape et une réalisation désignent les logiciels par leur slug (ex. `php, json, git`).
+- **Référencement** : toutes les pages sont dans le sitemap ; la page `/contexte` porte des données structurées HowTo (`src/Contexte.php`).
+
 ## Sécurité du backoffice
 
 - Mot de passe haché avec `password_hash` (jamais stocké en clair), fichier `data/admin.json` exclu de Git

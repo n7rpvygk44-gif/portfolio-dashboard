@@ -277,4 +277,89 @@
         }
     }
     window.addEventListener('hashchange', centerTarget);
+    // Réalisations : onglets « Présentation », « Contexte » et « Reproduire ce projet ».
+    // Sans JavaScript, les onglets restent des liens vers des sections toutes visibles.
+    // Ici, on les transforme en vrais onglets accessibles (rôles ARIA, flèches du clavier),
+    // et l'adresse (#onglet-contexte, #reproduire…) ouvre directement le bon onglet.
+    const tabNav = document.querySelector('[data-tabs]');
+    if (tabNav) {
+        const list = tabNav.querySelector('ul');
+        const tabs = [...tabNav.querySelectorAll('[data-tab]')];
+        const panels = tabs.map((tab) => document.getElementById(tab.dataset.tab));
+        if (panels.every(Boolean)) {
+            list.setAttribute('role', 'tablist');
+            list.querySelectorAll('li').forEach((li) => li.setAttribute('role', 'presentation'));
+            tabs.forEach((tab, i) => {
+                tab.setAttribute('role', 'tab');
+                tab.setAttribute('aria-controls', panels[i].id);
+                panels[i].setAttribute('role', 'tabpanel');
+                panels[i].setAttribute('aria-labelledby', tab.id);
+            });
+            tabNav.classList.add('is-ready');
+
+            const select = (index, focus) => {
+                tabs.forEach((tab, i) => {
+                    const active = i === index;
+                    tab.setAttribute('aria-selected', active ? 'true' : 'false');
+                    tab.tabIndex = active ? 0 : -1;
+                    panels[i].hidden = !active;
+                });
+                if (focus) {
+                    tabs[index].focus();
+                }
+                document.dispatchEvent(new CustomEvent('tab-change', { detail: { panel: panels[index] } }));
+            };
+            // Onglet qui contient l'élément visé par l'adresse (l'onglet lui-même ou un titre à l'intérieur).
+            const fromHash = () => {
+                const id = decodeURIComponent(location.hash.slice(1));
+                const target = id ? document.getElementById(id) : null;
+                const index = target ? panels.findIndex((panel) => panel.contains(target)) : -1;
+                return { index, target };
+            };
+            const show = (index, scrollTo) => {
+                select(index, false);
+                if (scrollTo) {
+                    (scrollTo === panels[index] ? tabNav : scrollTo).scrollIntoView({ block: 'start' });
+                }
+            };
+
+            const initial = fromHash();
+            show(initial.index >= 0 ? initial.index : 0, initial.index >= 0 ? initial.target : null);
+
+            tabs.forEach((tab, i) => {
+                tab.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    select(i, false);
+                    history.replaceState(null, '', '#' + panels[i].id);
+                });
+                tab.addEventListener('keydown', (event) => {
+                    const keys = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 };
+                    if (event.key in keys) {
+                        event.preventDefault();
+                        const next = (keys[event.key] + tabs.length) % tabs.length;
+                        select(next, true);
+                        history.replaceState(null, '', '#' + panels[next].id);
+                    }
+                });
+            });
+            // Liens internes vers un onglet (ex. « Pourquoi ces outils ? Voir le contexte »).
+            document.querySelectorAll('[data-tab-link]').forEach((link) => {
+                link.addEventListener('click', (event) => {
+                    const index = panels.findIndex((panel) => panel.id === link.dataset.tabLink);
+                    if (index >= 0) {
+                        event.preventDefault();
+                        select(index, true);
+                        history.replaceState(null, '', '#' + panels[index].id);
+                        tabNav.scrollIntoView({ block: 'start', behavior: root.classList.contains('a11y-motion') ? 'auto' : 'smooth' });
+                    }
+                });
+            });
+            window.addEventListener('hashchange', () => {
+                const { index, target } = fromHash();
+                if (index >= 0) {
+                    show(index, target);
+                }
+            });
+        }
+    }
 })();

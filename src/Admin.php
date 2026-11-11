@@ -12,6 +12,12 @@ final class Admin
     // Domaines techniques de la base de connaissances (vide = non classé).
     public const KB_DOMAINS = ['', 'Hébergement et déploiement', 'Systèmes', 'Réseau', 'Sécurité', 'Supervision', 'Outils et développement'];
 
+    // Familles de logiciels de la page Contexte.
+    public const SOFTWARE_CATEGORIES = ['Langage et format', 'Système d\'exploitation', 'Logiciel serveur', 'Outil en ligne de commande', 'Service en ligne', 'Application'];
+
+    // Licences possibles d'un logiciel (vide = non renseigné).
+    public const SOFTWARE_LICENCES = ['', 'Libre et gratuit', 'Standard ouvert et gratuit', 'Gratuit', 'Offre gratuite', 'Offre gratuite limitée', 'Payant'];
+
     public const COLLECTIONS = [
         'realisations' => [
             'label' => 'Réalisations',
@@ -24,8 +30,42 @@ final class Admin
                 'resume' => ['label' => 'Résumé (aussi utilisé pour le référencement)', 'type' => 'textarea'],
                 'competences' => ['label' => 'Compétences (codes séparés par des virgules, ex. B1.1, B1.4)', 'type' => 'list'],
                 'outils' => ['label' => 'Outils (séparés par des virgules)', 'type' => 'list'],
+                'logiciels' => ['label' => 'Onglet « Contexte » : logiciels utilisés (slugs de la rubrique Logiciels, séparés par des virgules)', 'type' => 'list',
+                    'help' => 'Ex. php, json, git. Chaque logiciel apparaît dans l\'onglet Contexte du projet avec son rôle et la raison de son choix.'],
                 'kb' => ['label' => 'Parcours « Reproduire ce projet » : fiches de la base de connaissances, dans l\'ordre (slugs séparés par des virgules)', 'type' => 'list'],
                 'contenu' => ['label' => 'Contenu (Markdown)', 'type' => 'markdown'],
+            ],
+        ],
+        'contexte' => [
+            'label' => 'Contexte : étapes de l\'environnement personnel',
+            'public' => '/contexte/',
+            'fields' => [
+                'titre' => ['label' => 'Titre de l\'étape', 'type' => 'text', 'required' => true],
+                'slug' => ['label' => 'Adresse (slug)', 'type' => 'text', 'help' => 'Laisser vide pour la générer depuis le titre.'],
+                'ordre' => ['label' => 'Numéro d\'ordre (1, 2, 3…)', 'type' => 'text', 'help' => 'Les étapes sont affichées dans l\'ordre de ce numéro.'],
+                'objectif' => ['label' => 'Objectif (une phrase)', 'type' => 'textarea'],
+                'resume' => ['label' => 'Résumé (utilisé pour le référencement)', 'type' => 'textarea'],
+                'niveau' => ['label' => 'Niveau', 'type' => 'select', 'options' => ['', 'Débutant', 'Intermédiaire', 'Avancé']],
+                'duree' => ['label' => 'Durée estimée (ex. 1 h 30)', 'type' => 'text'],
+                'logiciels' => ['label' => 'Logiciels de l\'étape (slugs de la rubrique Logiciels, séparés par des virgules)', 'type' => 'list'],
+                'kb' => ['label' => 'Fiches de la base de connaissances liées (slugs séparés par des virgules)', 'type' => 'list'],
+                'contenu' => ['label' => 'Contenu (Markdown)', 'type' => 'markdown'],
+            ],
+        ],
+        'logiciels' => [
+            'label' => 'Contexte : logiciels',
+            'public' => '/contexte/logiciels/',
+            'fields' => [
+                'titre' => ['label' => 'Nom du logiciel', 'type' => 'text', 'required' => true],
+                'slug' => ['label' => 'Adresse (slug)', 'type' => 'text', 'help' => 'Laisser vide pour la générer depuis le nom. C\'est ce slug qu\'on indique dans une réalisation ou une étape.'],
+                'categorie' => ['label' => 'Famille', 'type' => 'select', 'options' => self::SOFTWARE_CATEGORIES],
+                'licence' => ['label' => 'Licence', 'type' => 'select', 'options' => self::SOFTWARE_LICENCES],
+                'site' => ['label' => 'Site officiel', 'type' => 'url'],
+                'role' => ['label' => 'À quoi il sert (une ou deux phrases, aussi utilisé pour le référencement)', 'type' => 'textarea'],
+                'pourquoi' => ['label' => 'Pourquoi je l\'utilise dans mes projets (ou pourquoi je le propose)', 'type' => 'textarea'],
+                'autres_usages' => ['label' => 'Autres usages pour un environnement personnel (Markdown, une ligne « - » par usage)', 'type' => 'markdown'],
+                'alternatives' => ['label' => 'Alternatives (séparées par des virgules)', 'type' => 'list'],
+                'kb' => ['label' => 'Fiches de la base de connaissances liées (slugs séparés par des virgules)', 'type' => 'list'],
             ],
         ],
         'kb' => [

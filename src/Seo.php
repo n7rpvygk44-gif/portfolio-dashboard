@@ -13,7 +13,7 @@ final class Seo
     // Liste de toutes les pages publiques, utilisée pour le sitemap.
     public static function pages(JsonStore $store): array
     {
-        $paths = ['/', '/parcours', '/competences', '/realisations', '/synthese', '/veille', '/base-de-connaissances', '/contact', '/supervision', '/mentions-legales'];
+        $paths = ['/', '/parcours', '/competences', '/realisations', '/synthese', '/veille', '/base-de-connaissances', '/contexte', '/contact', '/supervision', '/mentions-legales'];
         foreach ($store->read('realisations') as $item) {
             $paths[] = '/realisations/' . $item['slug'];
         }
@@ -22,6 +22,12 @@ final class Seo
         }
         foreach ($store->read('kb') as $item) {
             $paths[] = '/base-de-connaissances/' . $item['slug'];
+        }
+        foreach (Contexte::steps($store->read('contexte')) as $item) {
+            $paths[] = '/contexte/' . $item['slug'];
+        }
+        foreach ($store->read('logiciels') as $item) {
+            $paths[] = '/contexte/logiciels/' . $item['slug'];
         }
         return $paths;
     }

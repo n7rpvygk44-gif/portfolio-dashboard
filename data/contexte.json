@@ -1,0 +1,193 @@
+[
+    {
+        "titre": "Définir ses besoins et faire un plan",
+        "slug": "definir-ses-besoins",
+        "ordre": "1",
+        "objectif": "Savoir ce que l'environnement doit faire avant d'acheter ou d'installer quoi que ce soit.",
+        "resume": "Première étape pour construire un environnement informatique personnel : lister ses besoins, faire l'inventaire de son matériel, dessiner le schéma réseau et choisir où héberger ses services.",
+        "niveau": "Débutant",
+        "duree": "1 h",
+        "logiciels": [],
+        "kb": [],
+        "contenu": "## Pourquoi commencer par là\n\nUn environnement « autonome » est un ensemble de services qui fonctionnent sans dépendre d'un fournisseur et dont vous gardez la maîtrise. Sans plan, on installe des logiciels au hasard et on ne sait plus ce qui tourne où. Une heure de réflexion évite des journées de dépannage.\n\n## Ce qu'il faut faire\n\n1. **Lister ses besoins** en une phrase chacun : « stocker mes fichiers chez moi », « publier mon portfolio », « être prévenu si un service tombe », « accéder à mes fichiers en déplacement ».\n2. **Faire l'inventaire** du matériel disponible : box Internet, ancien ordinateur, Raspberry Pi, disques durs. Noter pour chacun le processeur, la mémoire et l'espace disque.\n3. **Choisir où héberger chaque service** : chez soi (contrôle total, mais il faut l'entretenir) ou chez un hébergeur (simple et toujours allumé). Mon portfolio, par exemple, est chez un hébergeur ; un cloud personnel a plus sa place à la maison.\n4. **Dessiner le schéma réseau** : Internet, la box, le pare-feu, le serveur et les appareils, avec leurs adresses IP.\n5. **Fixer les règles de base** : un mot de passe différent par service, une sauvegarde automatique, une documentation à jour.\n\n> Astuce : gardez l'inventaire dans un fichier texte ou JSON suivi avec Git. Vous verrez ainsi l'évolution de votre environnement au fil du temps.\n\n## Vérifier que c'est réussi\n\nVous avez une liste de besoins, un inventaire et un schéma. Pour chaque besoin, vous savez quelle machine et quel logiciel y répondront."
+    },
+    {
+        "titre": "Préparer son poste d'administration",
+        "slug": "preparer-son-poste",
+        "ordre": "2",
+        "objectif": "Installer sur son propre ordinateur les outils qui serviront à administrer tout le reste.",
+        "resume": "Préparer l'ordinateur depuis lequel on administre son environnement personnel : terminal, gestionnaire de paquets, éditeur de code, Git et client SSH.",
+        "niveau": "Débutant",
+        "duree": "45 min",
+        "logiciels": [
+            "git",
+            "ssh"
+        ],
+        "kb": [
+            "installer-outils-mac",
+            "git",
+            "ssh"
+        ],
+        "contenu": "## Pourquoi cette étape\n\nVous n'allez pas brancher un écran sur chaque serveur. Tout se fera depuis votre ordinateur habituel, qui devient votre **poste d'administration**. Il doit donc avoir les bons outils, installés proprement.\n\n## Ce qu'il faut faire\n\n1. **Ouvrir un terminal** : Terminal sur macOS, Terminal Windows (avec PowerShell ou WSL) sur Windows.\n2. **Installer un gestionnaire de paquets**, qui installe et met à jour les logiciels en une commande : Homebrew sur macOS, `winget` sur Windows, `apt` sur Linux.\n3. **Installer un éditeur de code** (par exemple Visual Studio Code) pour modifier scripts et fichiers de configuration.\n4. **Installer Git** et le configurer avec votre nom et votre e-mail.\n5. **Créer une clé SSH** avec `ssh-keygen -t ed25519`. Elle remplacera les mots de passe pour vous connecter à vos serveurs.\n\n> Attention : la clé privée (le fichier sans `.pub`) ne doit jamais quitter votre ordinateur ni être envoyée sur GitHub.\n\n## Vérifier que c'est réussi\n\nLes commandes `git --version` et `ssh -V` affichent un numéro de version, et le fichier `~/.ssh/id_ed25519.pub` existe."
+    },
+    {
+        "titre": "Installer le serveur et son système",
+        "slug": "installer-le-serveur",
+        "ordre": "3",
+        "objectif": "Disposer d'une machine toujours allumée, avec un système stable, prête à accueillir les services.",
+        "resume": "Choisir le matériel d'un serveur personnel (ancien PC, mini-PC, Raspberry Pi) et installer un système Linux comme Debian, ou un hyperviseur comme Proxmox VE.",
+        "niveau": "Intermédiaire",
+        "duree": "2 h",
+        "logiciels": [
+            "debian",
+            "proxmox-ve"
+        ],
+        "kb": [],
+        "contenu": "## Pourquoi cette étape\n\nLe serveur est le cœur de l'environnement : c'est lui qui fait tourner les services jour et nuit. Un ancien ordinateur portable ou un mini-PC suffit largement pour commencer, et consomme peu.\n\n## Ce qu'il faut faire\n\n1. **Choisir le matériel** : au moins 4 Go de mémoire et un disque SSD. Un mini-PC d'occasion ou un Raspberry Pi 4/5 sont de bons choix.\n2. **Choisir l'approche** : soit *simple*, en installant directement **Debian** et les services dessus ; soit *évolutive*, en installant **Proxmox VE** puis une machine virtuelle ou un conteneur par service, ce qui est plus proche d'un système d'information d'entreprise.\n3. **Créer une clé USB d'installation** avec l'image officielle (balenaEtcher ou Raspberry Pi Imager).\n4. **Installer le système** sans interface graphique, en cochant seulement « serveur SSH ».\n5. **Faire les mises à jour** dès le premier démarrage : `sudo apt update && sudo apt full-upgrade`.\n6. **Créer un utilisateur personnel** avec les droits `sudo`, et ne plus travailler en `root`.\n\n## Vérifier que c'est réussi\n\nLe serveur redémarre seul sans écran ni clavier, et vous pouvez vous y connecter depuis votre poste avec `ssh utilisateur@adresse-du-serveur`."
+    },
+    {
+        "titre": "Construire le réseau local",
+        "slug": "construire-le-reseau",
+        "ordre": "4",
+        "objectif": "Donner une adresse stable à chaque machine, des noms faciles à retenir et une frontière claire avec Internet.",
+        "resume": "Organiser son réseau personnel : plan d'adressage IP, adresses fixes, DNS local avec Pi-hole et pare-feu avec OPNsense.",
+        "niveau": "Intermédiaire",
+        "duree": "2 h",
+        "logiciels": [
+            "opnsense",
+            "pi-hole"
+        ],
+        "kb": [],
+        "contenu": "## Pourquoi cette étape\n\nSi l'adresse du serveur change à chaque redémarrage, plus rien ne fonctionne. Un réseau bien organisé, c'est aussi la première protection : ce qui n'est pas joignable ne peut pas être attaqué.\n\n## Ce qu'il faut faire\n\n1. **Faire un plan d'adressage** : par exemple `192.168.1.1` pour la box, `192.168.1.10` à `.49` pour les serveurs, le reste pour les appareils en DHCP.\n2. **Réserver une adresse fixe** au serveur, de préférence dans le DHCP de la box (réservation liée à l'adresse MAC).\n3. **Installer un DNS local** comme Pi-hole pour appeler ses machines par un nom (`serveur.maison`) et bloquer les traceurs au passage.\n4. **Ajouter un pare-feu** (étape facultative mais formatrice) : OPNsense, dans une machine virtuelle Proxmox ou sur un petit boîtier à deux cartes réseau. Il permet ensuite de séparer les objets connectés, les invités et les serveurs (VLAN).\n5. **Fermer tout ce qui ne sert pas** : aucune redirection de port sur la box, sauf celle du VPN (étape suivante).\n\n## Vérifier que c'est réussi\n\n`ping serveur.maison` répond depuis votre poste, et un scan de votre adresse publique depuis l'extérieur ne montre aucun service ouvert, à part le VPN."
+    },
+    {
+        "titre": "Administrer à distance en sécurité",
+        "slug": "administrer-a-distance",
+        "ordre": "5",
+        "objectif": "Se connecter à ses machines depuis chez soi ou en déplacement, sans les exposer sur Internet.",
+        "resume": "Sécuriser l'accès à distance à son environnement personnel : connexion SSH par clé, désactivation des mots de passe et VPN WireGuard.",
+        "niveau": "Intermédiaire",
+        "duree": "1 h 30",
+        "logiciels": [
+            "ssh",
+            "wireguard"
+        ],
+        "kb": [
+            "connexion-ssh-alwaysdata",
+            "ssh"
+        ],
+        "contenu": "## Pourquoi cette étape\n\nC'est par l'accès à distance que passent la plupart des attaques. L'objectif est double : vous connecter facilement, et que personne d'autre ne le puisse.\n\n## Ce qu'il faut faire\n\n1. **Copier votre clé publique** sur le serveur : `ssh-copy-id utilisateur@serveur.maison`.\n2. **Vérifier la connexion par clé**, puis désactiver les mots de passe dans `/etc/ssh/sshd_config` (`PasswordAuthentication no`) et interdire la connexion de `root` (`PermitRootLogin no`).\n3. **Redémarrer le service** : `sudo systemctl restart ssh`, *sans fermer* la session en cours tant que la nouvelle connexion n'est pas testée.\n4. **Installer WireGuard** sur le serveur ou le pare-feu, et créer une configuration par appareil (ordinateur portable, téléphone).\n5. **Ouvrir un seul port** sur la box, celui de WireGuard (UDP 51820 par défaut). Tous les autres services restent invisibles depuis Internet.\n\n> Attention : gardez toujours une session SSH ouverte pendant que vous modifiez la configuration SSH. En cas d'erreur, c'est votre porte de secours.\n\n## Vérifier que c'est réussi\n\nDepuis le partage de connexion de votre téléphone, VPN activé, `ssh serveur.maison` fonctionne. VPN coupé, plus rien ne répond."
+    },
+    {
+        "titre": "Héberger ses services",
+        "slug": "heberger-ses-services",
+        "ordre": "6",
+        "objectif": "Faire tourner les services qui répondent à vos besoins : site web, cloud personnel, applications.",
+        "resume": "Héberger ses propres services : serveur web Apache avec PHP, conteneurs Docker, cloud personnel Nextcloud, ou hébergeur externe comme AlwaysData pour un site public.",
+        "niveau": "Intermédiaire",
+        "duree": "3 h",
+        "logiciels": [
+            "apache",
+            "php",
+            "html-css",
+            "javascript",
+            "json",
+            "svg",
+            "docker",
+            "nextcloud",
+            "alwaysdata",
+            "github-pages"
+        ],
+        "kb": [
+            "deployer-portfolio-alwaysdata",
+            "publier-portfolio-github-pages",
+            "json"
+        ],
+        "contenu": "## Pourquoi cette étape\n\nCe sont les services qui rendent l'environnement utile au quotidien. Les étapes précédentes ont préparé un terrain sûr ; il est temps d'y construire.\n\n## Ce qu'il faut faire\n\n1. **Décider où vit chaque service** (voir l'étape 1). Un *site public* comme un portfolio va chez un hébergeur (AlwaysData, ou GitHub Pages pour un site statique) : il reste disponible sans exposer votre maison. Un *service privé* comme un cloud personnel reste chez soi, accessible par le VPN.\n2. **Installer un serveur web** pour les services maison : Apache (ou Nginx) avec PHP, ou mieux, **Docker** avec un fichier `compose.yaml` par service.\n3. **Installer un premier service utile**, par exemple Nextcloud pour les fichiers, l'agenda et les contacts.\n4. **Stocker les données à part** (un dossier ou un disque dédié), pour pouvoir les sauvegarder et réinstaller le service sans rien perdre.\n5. **Noter chaque service** dans l'inventaire : adresse, port, emplacement des données, date d'installation.\n\n> Remarque : pour mon portfolio, j'ai choisi des fichiers JSON plutôt qu'une base de données. Un service simple est plus facile à sauvegarder, à comprendre et à réparer.\n\n## Vérifier que c'est réussi\n\nChaque service répond à son adresse, ses données sont dans le dossier prévu, et il redémarre seul après un redémarrage du serveur."
+    },
+    {
+        "titre": "Versionner et déployer ses configurations",
+        "slug": "versionner-et-deployer",
+        "ordre": "7",
+        "objectif": "Garder l'historique de tout ce qui est modifié, et pouvoir tout remettre en place rapidement.",
+        "resume": "Suivre les configurations et le code de son environnement avec Git et GitHub, et automatiser les mises à jour avec git pull ou GitHub Actions.",
+        "niveau": "Débutant",
+        "duree": "1 h",
+        "logiciels": [
+            "git",
+            "github",
+            "github-actions"
+        ],
+        "kb": [
+            "git",
+            "mettre-a-jour-site-git-pull",
+            "publier-portfolio-github-pages"
+        ],
+        "contenu": "## Pourquoi cette étape\n\nUn environnement autonome évolue sans cesse. Sans historique, une modification ratée peut faire perdre des heures. Avec Git, chaque changement est daté, expliqué et réversible.\n\n## Ce qu'il faut faire\n\n1. **Créer un dépôt Git** pour ses configurations : fichiers `compose.yaml`, scripts, notes, inventaire.\n2. **Enregistrer chaque modification** avec un message clair : `git commit -m \"Ajoute Nextcloud\"`.\n3. **Envoyer une copie sur GitHub** dans un dépôt *privé* : c'est aussi une sauvegarde hors de chez soi.\n4. **Mettre à jour un serveur** en une commande : `git pull` dans le dossier du projet, comme pour mon portfolio sur AlwaysData.\n5. **Automatiser si besoin** avec GitHub Actions : vérifications ou publication à chaque modification.\n\n> Attention : n'enregistrez jamais de mot de passe ni de clé dans Git. Mettez-les dans un fichier ignoré (listé dans `.gitignore`) ou dans un gestionnaire de mots de passe.\n\n## Vérifier que c'est réussi\n\n`git log` montre l'historique de vos changements, et vous savez réinstaller un service à partir du dépôt seul."
+    },
+    {
+        "titre": "Sécuriser l'environnement",
+        "slug": "securiser",
+        "ordre": "8",
+        "objectif": "Protéger les accès, les échanges et les données, et rester à jour.",
+        "resume": "Sécuriser son environnement personnel : HTTPS avec Let's Encrypt, mots de passe uniques avec KeePassXC, blocage des attaques avec Fail2ban, mises à jour et respect du RGPD.",
+        "niveau": "Intermédiaire",
+        "duree": "2 h",
+        "logiciels": [
+            "lets-encrypt",
+            "openssl",
+            "keepassxc",
+            "fail2ban"
+        ],
+        "kb": [
+            "securiser-acces-admin",
+            "notion-certificat-https",
+            "hachage-mot-de-passe",
+            "csrf",
+            "notion-audience-rgpd"
+        ],
+        "contenu": "## Pourquoi cette étape\n\nUn environnement personnel contient ce que vous avez de plus précieux : vos fichiers, vos photos, vos mots de passe. La sécurité n'est pas une étape finale, c'est une habitude, mais il faut une base solide.\n\n## Ce qu'il faut faire\n\n1. **Un mot de passe unique et long par service**, rangé dans un gestionnaire comme KeePassXC.\n2. **Chiffrer les échanges** : HTTPS pour tous les services web, avec un certificat Let's Encrypt (ou celui fourni par l'hébergeur).\n3. **Bloquer les attaques par force brute** : Fail2ban sur le serveur, et un blocage après plusieurs essais sur vos propres pages de connexion (c'est ce que fait mon backoffice).\n4. **Mettre à jour automatiquement** les correctifs de sécurité : `sudo apt install unattended-upgrades`.\n5. **Limiter les données collectées** : ne garder que le nécessaire, comme ma mesure d'audience sans cookie ni adresse IP. C'est l'esprit du RGPD.\n\n## Vérifier que c'est réussi\n\nLe cadenas s'affiche sur chaque service, `sudo fail2ban-client status` liste les protections actives, et aucun mot de passe n'est utilisé deux fois."
+    },
+    {
+        "titre": "Automatiser et superviser",
+        "slug": "automatiser-et-superviser",
+        "ordre": "9",
+        "objectif": "Laisser les machines faire les tâches répétitives et être prévenu dès qu'un service ne répond plus.",
+        "resume": "Automatiser les tâches de son environnement avec Cron et superviser ses services avec cURL, OpenSSL et Uptime Kuma : disponibilité, temps de réponse et certificats.",
+        "niveau": "Intermédiaire",
+        "duree": "1 h 30",
+        "logiciels": [
+            "cron",
+            "curl",
+            "openssl",
+            "uptime-kuma"
+        ],
+        "kb": [
+            "planifier-tache-cron-alwaysdata",
+            "superviser-site-curl-openssl",
+            "cron",
+            "notion-certificat-https"
+        ],
+        "contenu": "## Pourquoi cette étape\n\nUn environnement autonome doit tourner sans vous. Il faut donc que les tâches se lancent seules, et que vous sachiez qu'un problème existe *avant* d'en avoir besoin.\n\n## Ce qu'il faut faire\n\n1. **Lister les tâches répétitives** : sauvegardes, mises à jour, nettoyage, vérifications.\n2. **Les planifier avec Cron** : `crontab -e`, puis une ligne par tâche, par exemple `*/15 * * * * php ~/www/bin/monitor.php` pour une vérification toutes les 15 minutes.\n3. **Superviser chaque service** : est-il joignable (code HTTP 200), répond-il vite, son certificat expire-t-il bientôt ? Mon tableau de bord le fait pour mon portfolio avec cURL et OpenSSL.\n4. **Installer Uptime Kuma** pour surveiller tous les services d'un coup, de préférence sur une *autre* machine que celle qu'il surveille.\n5. **Configurer une alerte** (e-mail ou messagerie) pour ne pas avoir à regarder le tableau de bord.\n\n## Vérifier que c'est réussi\n\nArrêtez volontairement un service : vous recevez une alerte dans les minutes qui suivent, puis une seconde quand il redémarre."
+    },
+    {
+        "titre": "Sauvegarder et documenter",
+        "slug": "sauvegarder-et-documenter",
+        "ordre": "10",
+        "objectif": "Pouvoir tout reconstruire après une panne, et savoir comment le faire.",
+        "resume": "Protéger son environnement personnel avec la règle de sauvegarde 3-2-1 et BorgBackup, tester la restauration et documenter chaque procédure dans une base de connaissances.",
+        "niveau": "Intermédiaire",
+        "duree": "2 h",
+        "logiciels": [
+            "borgbackup",
+            "cron",
+            "git",
+            "github"
+        ],
+        "kb": [
+            "cron",
+            "git"
+        ],
+        "contenu": "## Pourquoi cette étape\n\nUn disque finit toujours par tomber en panne. Une sauvegarde jamais testée ne vaut rien, et une procédure que l'on n'a pas écrite est oubliée au bout de six mois. Cette étape rend l'environnement vraiment **autonome** : il ne dépend plus de votre mémoire.\n\n## Ce qu'il faut faire\n\n1. **Appliquer la règle 3-2-1** : 3 copies des données, sur 2 supports différents, dont 1 hors de chez soi.\n2. **Sauvegarder automatiquement** avec BorgBackup (chiffré, ne copie que ce qui a changé), lancé chaque nuit par Cron.\n3. **Tester une restauration** une fois par trimestre : récupérer un fichier, puis un service entier sur une machine de test.\n4. **Documenter chaque procédure** au moment où vous la faites : objectif, commandes, résultat attendu, erreurs rencontrées. C'est le rôle de ma [base de connaissances](/base-de-connaissances).\n5. **Versionner la documentation** avec Git, à côté des configurations.\n\n## Vérifier que c'est réussi\n\nVous savez répondre à la question : « mon serveur a brûlé cette nuit, que fais-je ce matin ? », et la réponse est écrite."
+    }
+]
