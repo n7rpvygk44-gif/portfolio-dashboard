@@ -22,6 +22,19 @@
             "GitHub Actions",
             "GitHub Pages"
         ],
+        "logiciels": [
+            "php",
+            "html-css",
+            "javascript",
+            "json",
+            "svg",
+            "git",
+            "github",
+            "github-actions",
+            "github-pages",
+            "alwaysdata",
+            "apache"
+        ],
         "kb": [
             "installer-outils-mac",
             "publier-portfolio-github-pages",
@@ -55,6 +68,20 @@
             "Git",
             "GitHub",
             "SVG"
+        ],
+        "logiciels": [
+            "php",
+            "json",
+            "svg",
+            "javascript",
+            "alwaysdata",
+            "apache",
+            "ssh",
+            "cron",
+            "curl",
+            "openssl",
+            "git",
+            "github"
         ],
         "kb": [
             "installer-outils-mac",

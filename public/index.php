@@ -100,6 +100,60 @@ switch (true) {
             'item' => $item,
             'kb' => $kb,
             'competences' => $store->read('competences'),
+            // Onglet « Contexte » : logiciels du projet, rangés par étape de l'environnement personnel.
+            'contexte' => Contexte::groupForRealisation($item, $store->read('logiciels'), $store->read('contexte')),
+            'steps' => Contexte::steps($store->read('contexte')),
+        ]);
+        break;
+
+    // ----- Contexte : construire un environnement informatique fondamental, autonome et personnel -----
+    case $path === '/contexte':
+        $steps = Contexte::steps($store->read('contexte'));
+        $title = 'Contexte : construire son environnement informatique personnel';
+        $description = 'Les logiciels utilisés dans mes projets, pourquoi je les ai choisis, et les étapes pour créer un environnement informatique fondamental, entièrement autonome et personnel.';
+        View::render('pages/contexte', $page($title, $description) + [
+            'steps' => $steps,
+            'logiciels' => $store->read('logiciels'),
+            'realisations' => $store->read('realisations'),
+            'jsonLd' => Contexte::jsonLd($config, $steps, $title, $description),
+        ]);
+        break;
+
+    case (bool) preg_match('#^/contexte/logiciels/([a-z0-9-]+)$#', $path, $m):
+        $item = $store->find('logiciels', $m[1]);
+        if (!$item) {
+            notFound($page('Page introuvable', ''));
+            break;
+        }
+        $steps = Contexte::steps($store->read('contexte'));
+        View::render('pages/contexte-logiciel', $page($item['titre'] . ' : rôle, choix et usages', $item['role'] ?? '') + [
+            'item' => $item,
+            'steps' => $steps,
+            'itemSteps' => Contexte::stepsOf($item['slug'], $steps),
+            'usedIn' => Contexte::usedIn($item['slug'], $store->read('realisations')),
+            'kb' => Contexte::pick($item['kb'] ?? [], $store->read('kb')),
+        ]);
+        break;
+
+    case (bool) preg_match('#^/contexte/([a-z0-9-]+)$#', $path, $m):
+        $item = $store->find('contexte', $m[1]);
+        if (!$item) {
+            notFound($page('Page introuvable', ''));
+            break;
+        }
+        $steps = Contexte::steps($store->read('contexte'));
+        $n = Contexte::position($item['slug'], $steps);
+        View::render('pages/contexte-etape', $page('Étape ' . $n . ' : ' . $item['titre'], $item['resume'] ?? '') + [
+            'item' => $item,
+            'number' => $n,
+            'total' => count($steps),
+            'previous' => $steps[$n - 2] ?? null,
+            'next' => $steps[$n] ?? null,
+            'logiciels' => Contexte::pick($item['logiciels'] ?? [], $store->read('logiciels')),
+            'kb' => Contexte::pick($item['kb'] ?? [], $store->read('kb')),
+            'realisations' => Contexte::realisationsOfStep($item, $store->read('realisations')),
+            'toc' => Markdown::headings($item['contenu'] ?? ''),
+            'ogType' => 'article',
         ]);
         break;
 

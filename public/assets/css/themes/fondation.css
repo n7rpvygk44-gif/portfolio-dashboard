@@ -260,6 +260,16 @@
 }
 .theme-fondation .tags li { font-size: 0.8rem; border-color: var(--border); background: var(--surface-strong); color: var(--muted); }
 .theme-fondation .related { border-left-color: var(--gold); }
+/* Onglets des réalisations : capitales espacées, filet or sous l'onglet actif */
+.theme-fondation .tabs { border-bottom-color: var(--border); }
+.theme-fondation .tabs a { font: 500 0.78rem/1.4 var(--display); letter-spacing: 0.16em; text-transform: uppercase; }
+.theme-fondation .tabs a[aria-selected="true"] { color: var(--text); border-bottom-color: var(--gold); }
+/* Page Contexte */
+.theme-fondation .context-step-number { font-family: var(--display); letter-spacing: 0.2em; }
+.theme-fondation .context-step .context-step-number { color: var(--gold); font-weight: 400; }
+.theme-fondation .context-definition div { background: var(--surface-strong); border-top: 2px solid var(--gold); }
+.theme-fondation .context-definition dt { font-family: var(--display); font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
+.theme-fondation .context-cta { background: var(--surface-strong); border-left-color: var(--gold); }
 
 /* ----- Accueil ----- */
 .theme-fondation .hero {

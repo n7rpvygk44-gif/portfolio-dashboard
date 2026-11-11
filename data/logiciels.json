@@ -1,0 +1,446 @@
+[
+    {
+        "titre": "PHP",
+        "slug": "php",
+        "categorie": "Langage et format",
+        "licence": "Libre et gratuit",
+        "site": "https://www.php.net/",
+        "role": "Langage qui s'exécute sur le serveur : il fabrique les pages à la demande, lit et écrit des fichiers et gère les connexions.",
+        "pourquoi": "Il était imposé pour le portfolio et il est disponible chez presque tous les hébergeurs, y compris l'offre gratuite d'AlwaysData. Il me sert pour le backoffice sécurisé, la lecture des fichiers JSON, la mesure d'audience et le script de supervision.",
+        "autres_usages": "- Faire tourner des applications auto-hébergées écrites en PHP : Nextcloud (cloud personnel), un wiki, un gestionnaire de parc informatique comme GLPI.\n- Écrire de petits scripts d'administration lancés en ligne de commande (`php mon-script.php`).\n- Créer une petite API interne, par exemple pour un tableau de bord domotique ou un inventaire du matériel.",
+        "alternatives": [
+            "Python",
+            "Node.js"
+        ],
+        "kb": [
+            "securiser-acces-admin",
+            "compter-visites-sans-cookie"
+        ]
+    },
+    {
+        "titre": "HTML et CSS",
+        "slug": "html-css",
+        "categorie": "Langage et format",
+        "licence": "Standard ouvert et gratuit",
+        "site": "https://developer.mozilla.org/fr/docs/Web/HTML",
+        "role": "HTML décrit le contenu d'une page (titres, paragraphes, liens). CSS décrit son apparence (couleurs, disposition, thèmes).",
+        "pourquoi": "Ce sont les langages que comprend tout navigateur. Les séparer du PHP et du JavaScript était une exigence du projet, et les thèmes interchangeables comme les options d'accessibilité reposent entièrement sur le CSS.",
+        "autres_usages": "- Créer une page d'accueil locale qui regroupe les liens vers tous ses services : le « portail » de son réseau personnel.\n- Personnaliser l'interface d'un outil auto-hébergé.\n- Rédiger une documentation consultable hors ligne, dans n'importe quel navigateur.",
+        "alternatives": [
+            "Markdown (pour du texte simple)"
+        ],
+        "kb": []
+    },
+    {
+        "titre": "JavaScript",
+        "slug": "javascript",
+        "categorie": "Langage et format",
+        "licence": "Standard ouvert et gratuit",
+        "site": "https://developer.mozilla.org/fr/docs/Web/JavaScript",
+        "role": "Langage exécuté par le navigateur du visiteur : il rend la page interactive sans la recharger.",
+        "pourquoi": "Il gère le menu mobile, le panneau d'accessibilité, le filtre instantané de la base de connaissances, les onglets des réalisations et l'envoi anonyme des pages vues. Le site reste utilisable sans lui : c'est un confort, pas une obligation.",
+        "autres_usages": "- Afficher des graphiques en direct dans un tableau de bord de supervision.\n- Écrire des scripts côté serveur avec Node.js.\n- Créer des automatisations domotiques (Node-RED, Home Assistant).",
+        "alternatives": [
+            "TypeScript"
+        ],
+        "kb": [
+            "compter-visites-sans-cookie"
+        ]
+    },
+    {
+        "titre": "JSON",
+        "slug": "json",
+        "categorie": "Langage et format",
+        "licence": "Standard ouvert et gratuit",
+        "site": "https://www.json.org/json-fr.html",
+        "role": "Format de texte simple pour ranger des données structurées (listes, champs, valeurs), lisible par un humain comme par un programme.",
+        "pourquoi": "C'était une exigence du projet : tout le contenu du site (profil, réalisations, base de connaissances, audience, supervision, et cette page Contexte) est stocké dans des fichiers JSON. Pas de base de données à installer, et les fichiers se sauvegardent et se versionnent avec Git.",
+        "autres_usages": "- Lire et écrire les fichiers de configuration de nombreux logiciels.\n- Échanger des données avec une API (GitHub, météo, objets connectés).\n- Exporter un inventaire du matériel ou des résultats de supervision.",
+        "alternatives": [
+            "YAML",
+            "SQLite"
+        ],
+        "kb": [
+            "json"
+        ]
+    },
+    {
+        "titre": "SVG",
+        "slug": "svg",
+        "categorie": "Langage et format",
+        "licence": "Standard ouvert et gratuit",
+        "site": "https://developer.mozilla.org/fr/docs/Web/SVG",
+        "role": "Format d'image vectorielle écrit en texte : l'image reste nette à toutes les tailles.",
+        "pourquoi": "Les graphiques du tableau de bord (audience, temps de réponse) sont générés en SVG par le serveur, sans bibliothèque externe, ce qui respecte la politique de sécurité du site. Les illustrations du thème Fondation sont aussi en SVG.",
+        "autres_usages": "- Dessiner des schémas réseau nets pour sa documentation (draw.io exporte en SVG).\n- Créer les icônes de la page d'accueil de ses services.\n- Produire des graphiques dans des rapports générés automatiquement.",
+        "alternatives": [
+            "PNG",
+            "Chart.js"
+        ],
+        "kb": []
+    },
+    {
+        "titre": "Git",
+        "slug": "git",
+        "categorie": "Outil en ligne de commande",
+        "licence": "Libre et gratuit",
+        "site": "https://git-scm.com/",
+        "role": "Logiciel de gestion de versions : il enregistre chaque modification des fichiers et permet de revenir à une version précédente.",
+        "pourquoi": "Tout le code du portfolio est suivi avec Git. Il permet de travailler sur une copie (une branche) sans casser le site, puis de mettre à jour le serveur en une commande (`git pull`).",
+        "autres_usages": "- Versionner les fichiers de configuration de ses serveurs (pare-feu, services, scripts) pour retrouver une version qui fonctionnait.\n- Garder l'historique complet de sa documentation.\n- Déployer la même configuration sur plusieurs machines.",
+        "alternatives": [
+            "Mercurial"
+        ],
+        "kb": [
+            "git",
+            "mettre-a-jour-site-git-pull"
+        ]
+    },
+    {
+        "titre": "GitHub",
+        "slug": "github",
+        "categorie": "Service en ligne",
+        "licence": "Offre gratuite",
+        "site": "https://github.com/",
+        "role": "Plateforme en ligne qui héberge des dépôts Git, avec un historique consultable, des demandes de fusion (pull requests) et une API.",
+        "pourquoi": "Il garde une copie de sauvegarde de mon code, me permet de relire chaque modification avant de la fusionner, et son API donne au tableau de bord la date de la dernière mise à jour du site.",
+        "autres_usages": "- Sauvegarder hors de chez soi ses scripts et configurations, dans un dépôt privé.\n- Suivre ses tâches et ses idées avec les tickets (issues).\n- Montrer ses projets et sa documentation à un jury ou à un recruteur.",
+        "alternatives": [
+            "GitLab",
+            "Forgejo (auto-hébergé)"
+        ],
+        "kb": [
+            "publier-portfolio-github-pages",
+            "git"
+        ]
+    },
+    {
+        "titre": "GitHub Actions",
+        "slug": "github-actions",
+        "categorie": "Service en ligne",
+        "licence": "Offre gratuite",
+        "site": "https://docs.github.com/fr/actions",
+        "role": "Service d'automatisation de GitHub : il exécute des scripts (vérifications, construction, publication) sur des machines fournies par GitHub.",
+        "pourquoi": "Il construisait la version statique du portfolio et la publiait sur GitHub Pages en un clic, sans rien installer sur mon ordinateur.",
+        "autres_usages": "- Vérifier automatiquement ses scripts à chaque modification.\n- Planifier une tâche régulière, comme vérifier qu'un site répond.\n- Construire et publier une image Docker.",
+        "alternatives": [
+            "GitLab CI",
+            "Jenkins"
+        ],
+        "kb": [
+            "publier-portfolio-github-pages"
+        ]
+    },
+    {
+        "titre": "GitHub Pages",
+        "slug": "github-pages",
+        "categorie": "Service en ligne",
+        "licence": "Gratuit",
+        "site": "https://pages.github.com/",
+        "role": "Hébergement gratuit de sites statiques (HTML, CSS, JavaScript) directement depuis un dépôt GitHub.",
+        "pourquoi": "C'est la première mise en ligne du portfolio : gratuite, en HTTPS, sans serveur à gérer. Comme il ne peut pas exécuter de PHP, je suis passé à AlwaysData pour le backoffice. Il reste en ligne comme site de sauvegarde.",
+        "autres_usages": "- Publier la documentation de son environnement.\n- Héberger un CV en ligne ou une page personnelle.",
+        "alternatives": [
+            "Netlify",
+            "Cloudflare Pages"
+        ],
+        "kb": [
+            "publier-portfolio-github-pages"
+        ]
+    },
+    {
+        "titre": "AlwaysData",
+        "slug": "alwaysdata",
+        "categorie": "Service en ligne",
+        "licence": "Offre gratuite limitée",
+        "site": "https://www.alwaysdata.com/fr/",
+        "role": "Hébergeur web français qui fournit un espace capable d'exécuter PHP, un accès SSH, des tâches planifiées et un certificat HTTPS.",
+        "pourquoi": "Son offre gratuite exécute le PHP du backoffice et de la mesure d'audience, avec SSH et les tâches planifiées : tout ce qu'il fallait pour le tableau de bord, sans acheter de serveur.",
+        "autres_usages": "- Héberger une petite application ou une API personnelle.\n- Servir de sonde extérieure pour surveiller un serveur installé à la maison.\n- S'entraîner à l'administration Linux à distance (SSH, tâches planifiées, journaux).",
+        "alternatives": [
+            "Un VPS (serveur privé virtuel)",
+            "Un serveur à la maison"
+        ],
+        "kb": [
+            "deployer-portfolio-alwaysdata",
+            "connexion-ssh-alwaysdata"
+        ]
+    },
+    {
+        "titre": "Apache HTTP Server",
+        "slug": "apache",
+        "categorie": "Logiciel serveur",
+        "licence": "Libre et gratuit",
+        "site": "https://httpd.apache.org/",
+        "role": "Serveur web : il reçoit les demandes des navigateurs et renvoie les pages, en confiant les fichiers PHP à l'interpréteur PHP.",
+        "pourquoi": "Le fichier `.htaccess` du portfolio lui demande d'envoyer toutes les adresses vers `index.php`. Cela donne des adresses propres comme `/realisations/portfolio`, utiles au référencement.",
+        "autres_usages": "- Héberger chez soi un site, un wiki ou une application web comme Nextcloud.\n- Servir de « proxy inverse » : une seule adresse d'entrée qui redirige vers plusieurs services.\n- Protéger un dossier par mot de passe.",
+        "alternatives": [
+            "Nginx",
+            "Caddy"
+        ],
+        "kb": [
+            "deployer-portfolio-alwaysdata"
+        ]
+    },
+    {
+        "titre": "SSH (OpenSSH)",
+        "slug": "ssh",
+        "categorie": "Outil en ligne de commande",
+        "licence": "Libre et gratuit",
+        "site": "https://www.openssh.com/",
+        "role": "Protocole et logiciel pour se connecter à un serveur distant et y taper des commandes, à travers une connexion chiffrée.",
+        "pourquoi": "C'est le seul moyen d'administrer le serveur AlwaysData en ligne de commande : récupérer le code, créer le compte administrateur, mettre le site à jour.",
+        "autres_usages": "- Administrer toutes les machines de son réseau (serveur, Raspberry Pi, NAS) depuis un seul poste.\n- Copier des fichiers de façon sécurisée avec `scp` ou `rsync`.\n- Créer un tunnel chiffré vers un service qui n'est pas exposé sur Internet.",
+        "alternatives": [
+            "PuTTY (Windows)"
+        ],
+        "kb": [
+            "connexion-ssh-alwaysdata",
+            "ssh"
+        ]
+    },
+    {
+        "titre": "Cron",
+        "slug": "cron",
+        "categorie": "Logiciel serveur",
+        "licence": "Libre et gratuit",
+        "site": "https://fr.wikipedia.org/wiki/Cron",
+        "role": "Planificateur de tâches des systèmes Linux : il lance une commande automatiquement à heure fixe ou à intervalle régulier.",
+        "pourquoi": "Il lance le script de supervision toutes les 15 minutes, même quand personne n'est connecté au tableau de bord.",
+        "autres_usages": "- Lancer une sauvegarde chaque nuit.\n- Installer les mises à jour de sécurité ou supprimer les vieux fichiers temporaires.\n- Relever des capteurs (température, consommation) à intervalle régulier.",
+        "alternatives": [
+            "Timers systemd",
+            "Planificateur de tâches (Windows)"
+        ],
+        "kb": [
+            "planifier-tache-cron-alwaysdata",
+            "cron"
+        ]
+    },
+    {
+        "titre": "cURL",
+        "slug": "curl",
+        "categorie": "Outil en ligne de commande",
+        "licence": "Libre et gratuit",
+        "site": "https://curl.se/",
+        "role": "Outil et bibliothèque pour envoyer des requêtes web (HTTP, HTTPS) et lire la réponse, sans navigateur.",
+        "pourquoi": "Le script de supervision l'utilise (depuis PHP) pour ouvrir le site comme un visiteur et noter le code HTTP et le temps de réponse.",
+        "autres_usages": "- Tester en une ligne si un service répond : `curl -I https://exemple.fr`.\n- Interroger une API (GitHub, météo, domotique).\n- Télécharger un fichier dans un script.",
+        "alternatives": [
+            "wget",
+            "HTTPie"
+        ],
+        "kb": [
+            "superviser-site-curl-openssl"
+        ]
+    },
+    {
+        "titre": "OpenSSL",
+        "slug": "openssl",
+        "categorie": "Outil en ligne de commande",
+        "licence": "Libre et gratuit",
+        "site": "https://www.openssl.org/",
+        "role": "Boîte à outils de chiffrement : elle crée, lit et vérifie les certificats et les connexions TLS (le « S » de HTTPS).",
+        "pourquoi": "Le tableau de bord s'en sert pour lire le certificat HTTPS du site, connaître son émetteur et sa date d'expiration, et prévenir 15 jours avant.",
+        "autres_usages": "- Vérifier le certificat de n'importe quel service : `openssl s_client -connect exemple.fr:443`.\n- Créer un certificat pour un service interne à son réseau.\n- Générer un mot de passe ou une clé aléatoire : `openssl rand -base64 24`.",
+        "alternatives": [
+            "LibreSSL"
+        ],
+        "kb": [
+            "notion-certificat-https",
+            "superviser-site-curl-openssl"
+        ]
+    },
+    {
+        "titre": "Debian",
+        "slug": "debian",
+        "categorie": "Système d'exploitation",
+        "licence": "Libre et gratuit",
+        "site": "https://www.debian.org/index.fr.html",
+        "role": "Distribution Linux réputée pour sa stabilité, très utilisée sur les serveurs.",
+        "pourquoi": "C'est la base que je recommande pour un premier serveur : gratuite, stable, très bien documentée et proche de ce qu'on rencontre en entreprise. Ubuntu Server et Raspberry Pi OS en sont dérivés, donc les commandes apprises servent partout.",
+        "autres_usages": "- Transformer un ancien ordinateur en serveur personnel.\n- Servir de système aux machines virtuelles d'un hyperviseur.\n- S'entraîner aux commandes Linux demandées en BTS SISR (utilisateurs, droits, services, journaux).",
+        "alternatives": [
+            "Ubuntu Server",
+            "Rocky Linux"
+        ],
+        "kb": []
+    },
+    {
+        "titre": "Proxmox VE",
+        "slug": "proxmox-ve",
+        "categorie": "Système d'exploitation",
+        "licence": "Libre et gratuit",
+        "site": "https://www.proxmox.com/fr/",
+        "role": "Hyperviseur installé directement sur le serveur : il fait tourner plusieurs machines virtuelles et conteneurs sur un seul ordinateur.",
+        "pourquoi": "Avec une seule machine, on obtient plusieurs serveurs isolés (pare-feu, web, tests). Si l'un est cassé, on le restaure depuis un instantané. C'est un excellent terrain d'entraînement pour le BTS SISR.",
+        "autres_usages": "- Monter un laboratoire pour tester un Active Directory, un serveur de fichiers ou un pare-feu.\n- Héberger tous ses services sur un mini-PC peu gourmand.\n- Sauvegarder des machines entières avec Proxmox Backup Server.",
+        "alternatives": [
+            "VMware ESXi",
+            "XCP-ng",
+            "VirtualBox (sur un poste)"
+        ],
+        "kb": []
+    },
+    {
+        "titre": "OPNsense",
+        "slug": "opnsense",
+        "categorie": "Système d'exploitation",
+        "licence": "Libre et gratuit",
+        "site": "https://opnsense.org/",
+        "role": "Pare-feu et routeur libre, administré depuis une interface web.",
+        "pourquoi": "Il sépare le réseau personnel d'Internet et le découpe en zones (VLAN), avec DHCP, DNS et VPN intégrés : les briques d'un réseau d'entreprise, à la maison.",
+        "autres_usages": "- Isoler les objets connectés dans un réseau à part.\n- Créer un réseau invité pour les visiteurs.\n- Observer le trafic et apprendre à écrire des règles de filtrage.",
+        "alternatives": [
+            "pfSense",
+            "IPFire"
+        ],
+        "kb": []
+    },
+    {
+        "titre": "Pi-hole",
+        "slug": "pi-hole",
+        "categorie": "Logiciel serveur",
+        "licence": "Libre et gratuit",
+        "site": "https://pi-hole.net/",
+        "role": "Serveur DNS local qui bloque les publicités et les traceurs pour tous les appareils du réseau.",
+        "pourquoi": "Il donne la main sur la résolution de noms : on peut nommer ses machines (`serveur.maison`) et voir quels appareils contactent quels sites.",
+        "autres_usages": "- Protéger tous les appareils de la maison, même ceux où l'on ne peut rien installer (télévision, console).\n- Servir de DNS local pour ses propres services.\n- Comprendre concrètement le fonctionnement du DNS.",
+        "alternatives": [
+            "AdGuard Home",
+            "Unbound"
+        ],
+        "kb": []
+    },
+    {
+        "titre": "WireGuard",
+        "slug": "wireguard",
+        "categorie": "Logiciel serveur",
+        "licence": "Libre et gratuit",
+        "site": "https://www.wireguard.com/",
+        "role": "VPN moderne et rapide : il crée un tunnel chiffré entre ses appareils et son réseau.",
+        "pourquoi": "Il permet d'accéder à ses services depuis l'extérieur sans les exposer sur Internet : un seul port ouvert, et seuls les appareils dont la clé est connue peuvent entrer.",
+        "autres_usages": "- Consulter ses fichiers ou son tableau de bord depuis son téléphone, en déplacement.\n- Relier deux sites (chez soi et chez un proche) pour croiser les sauvegardes.\n- Sécuriser sa connexion sur un Wi-Fi public.",
+        "alternatives": [
+            "OpenVPN",
+            "Tailscale"
+        ],
+        "kb": []
+    },
+    {
+        "titre": "Docker",
+        "slug": "docker",
+        "categorie": "Logiciel serveur",
+        "licence": "Libre et gratuit",
+        "site": "https://www.docker.com/",
+        "role": "Outil qui fait tourner des applications dans des conteneurs : chaque service est isolé, avec tout ce dont il a besoin.",
+        "pourquoi": "Installer, mettre à jour ou supprimer un service devient une commande, et toute la configuration tient dans un fichier `compose.yaml` que l'on peut versionner avec Git.",
+        "autres_usages": "- Installer en quelques minutes Nextcloud, Uptime Kuma ou un wiki.\n- Tester un logiciel sans rien laisser sur sa machine.\n- Reproduire à l'identique un environnement sur un autre serveur.",
+        "alternatives": [
+            "Podman",
+            "Conteneurs LXC (Proxmox)"
+        ],
+        "kb": []
+    },
+    {
+        "titre": "Nextcloud",
+        "slug": "nextcloud",
+        "categorie": "Application",
+        "licence": "Libre et gratuit",
+        "site": "https://nextcloud.com/fr/",
+        "role": "Cloud personnel auto-hébergé : fichiers, agenda, contacts et photos synchronisés entre ses appareils.",
+        "pourquoi": "C'est le service qui rend l'environnement vraiment personnel : les données restent chez soi plutôt que chez un fournisseur. Il est écrit en PHP, comme mon portfolio.",
+        "autres_usages": "- Remplacer un stockage en ligne commercial pour toute la famille.\n- Partager des documents avec un lien protégé par mot de passe.\n- Sauvegarder automatiquement les photos du téléphone.",
+        "alternatives": [
+            "Seafile",
+            "Syncthing"
+        ],
+        "kb": []
+    },
+    {
+        "titre": "Let's Encrypt (Certbot)",
+        "slug": "lets-encrypt",
+        "categorie": "Service en ligne",
+        "licence": "Gratuit",
+        "site": "https://letsencrypt.org/fr/",
+        "role": "Autorité de certification gratuite qui délivre des certificats HTTPS. L'outil Certbot les demande et les renouvelle automatiquement.",
+        "pourquoi": "C'est la solution la plus répandue pour obtenir gratuitement le cadenas HTTPS sur ses propres services. La supervision de mon portfolio affiche déjà l'émetteur et la date d'expiration du certificat du site.",
+        "autres_usages": "- Mettre ses services auto-hébergés en HTTPS.\n- Automatiser le renouvellement des certificats tous les 90 jours.",
+        "alternatives": [
+            "ZeroSSL",
+            "Caddy (HTTPS automatique)"
+        ],
+        "kb": [
+            "notion-certificat-https"
+        ]
+    },
+    {
+        "titre": "KeePassXC",
+        "slug": "keepassxc",
+        "categorie": "Application",
+        "licence": "Libre et gratuit",
+        "site": "https://keepassxc.org/",
+        "role": "Gestionnaire de mots de passe hors ligne : tous les mots de passe sont dans un fichier chiffré, protégé par un mot de passe principal.",
+        "pourquoi": "Un environnement autonome multiplie les comptes (serveur, pare-feu, VPN, services). Il permet un mot de passe long et différent pour chacun, sans dépendre d'un service en ligne.",
+        "autres_usages": "- Stocker aussi ses clés SSH et ses codes de récupération.\n- Partager un coffre de mots de passe en famille via Nextcloud.\n- Générer des mots de passe robustes.",
+        "alternatives": [
+            "Bitwarden / Vaultwarden (auto-hébergé)"
+        ],
+        "kb": [
+            "hachage-mot-de-passe"
+        ]
+    },
+    {
+        "titre": "Fail2ban",
+        "slug": "fail2ban",
+        "categorie": "Logiciel serveur",
+        "licence": "Libre et gratuit",
+        "site": "https://github.com/fail2ban/fail2ban",
+        "role": "Surveille les journaux du serveur et bloque temporairement les adresses qui multiplient les tentatives de connexion ratées.",
+        "pourquoi": "C'est le même principe que le blocage après 5 essais de mon backoffice, mais appliqué à tout le serveur (SSH, site web, messagerie).",
+        "autres_usages": "- Protéger l'accès SSH d'un serveur exposé sur Internet.\n- Bloquer les robots qui testent des mots de passe sur une page de connexion.",
+        "alternatives": [
+            "CrowdSec"
+        ],
+        "kb": [
+            "securiser-acces-admin"
+        ]
+    },
+    {
+        "titre": "Uptime Kuma",
+        "slug": "uptime-kuma",
+        "categorie": "Application",
+        "licence": "Libre et gratuit",
+        "site": "https://github.com/louislam/uptime-kuma",
+        "role": "Outil de supervision auto-hébergé : il vérifie régulièrement que des sites et services répondent, et prévient en cas de panne.",
+        "pourquoi": "Il reprend ce que fait mon script de supervision (disponibilité, temps de réponse, certificat) pour tous les services du réseau, avec des alertes. Installé sur une autre machine, il corrige la limite de mon tableau de bord, qui se surveille depuis son propre serveur.",
+        "autres_usages": "- Être prévenu sur son téléphone quand un service tombe.\n- Publier une page d'état de ses services.\n- Surveiller la date d'expiration de tous ses certificats.",
+        "alternatives": [
+            "Zabbix",
+            "Netdata",
+            "Prometheus et Grafana"
+        ],
+        "kb": [
+            "superviser-site-curl-openssl"
+        ]
+    },
+    {
+        "titre": "BorgBackup",
+        "slug": "borgbackup",
+        "categorie": "Outil en ligne de commande",
+        "licence": "Libre et gratuit",
+        "site": "https://www.borgbackup.org/",
+        "role": "Logiciel de sauvegarde qui chiffre, compresse et déduplique : chaque nouvelle sauvegarde ne stocke que ce qui a changé.",
+        "pourquoi": "Il permet d'appliquer la règle 3-2-1 sans y passer du temps : lancé chaque nuit par Cron, il garde des sauvegardes chiffrées sur un disque et sur une autre machine.",
+        "autres_usages": "- Sauvegarder ses fichiers de configuration, ses données Nextcloud et ses bases de données.\n- Garder plusieurs versions (7 jours, 4 semaines, 6 mois) avec `borg prune`.\n- Envoyer une copie chiffrée chez un proche ou chez un hébergeur.",
+        "alternatives": [
+            "restic",
+            "rsync",
+            "Proxmox Backup Server"
+        ],
+        "kb": [
+            "cron"
+        ]
+    }
+]
