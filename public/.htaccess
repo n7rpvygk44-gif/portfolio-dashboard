@@ -1,10 +1,21 @@
-# Toutes les adresses qui ne correspondent pas à un vrai fichier (CSS, JS, images)
-# sont envoyées à index.php : cela donne des URL propres, utiles au référencement.
 Options -Indexes
 RewriteEngine On
+
+# 1. Forcer le HTTPS (redirection permanente 301).
+# Chez alwaysdata, le chiffrement TLS est fait par un serveur placé devant Apache (un « proxy »).
+# Apache peut donc voir arriver la requête en clair même si le visiteur est en HTTPS.
+# On regarde deux indices, et on ne redirige que si AUCUN des deux ne dit « HTTPS » :
+#   - %{HTTPS} : vaut « on » quand Apache sait que la connexion est chiffrée ;
+#   - X-Forwarded-Proto : en-tête ajouté par le proxy, vaut « https » si le visiteur est en HTTPS.
+# Sans cette double vérification, le site pourrait se rediriger vers lui-même sans fin (boucle).
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# 2. URL propres : toutes les adresses qui ne correspondent pas à un vrai fichier (CSS, JS, images)
+# sont envoyées à index.php. Cela donne des URL lisibles, utiles au référencement.
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [QSA,L]
 
-# Forcer le HTTPS (à décommenter une fois le certificat actif).
-# RewriteCond %{HTTPS} off
-# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# L'en-tête HSTS (« reste en HTTPS ») est envoyé par PHP : voir src/bootstrap.php.
+# Explications complètes : docs/https.md

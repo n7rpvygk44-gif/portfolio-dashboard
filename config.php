@@ -41,6 +41,10 @@ return [
     // Dossier des données JSON (hors de public/, donc inaccessible depuis le web).
     'data_dir' => __DIR__ . '/data',
 
+    // HTTPS : durée (en secondes) pendant laquelle le navigateur doit rester en HTTPS (en-tête HSTS).
+    // 31536000 = 1 an. Mettre 0 pour ne plus envoyer l'en-tête. Explications : docs/https.md.
+    'hsts_max_age' => 31536000,
+
     // Sécurité du backoffice.
     'login_max_attempts' => 5,        // tentatives avant blocage
     'login_lock_seconds' => 15 * 60,  // durée du blocage
