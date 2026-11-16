@@ -19,6 +19,8 @@ return [
     'hosts' => [
         'olivierpizelle.alwaysdata.net' => [
             'base_url' => 'https://olivierpizelle.alwaysdata.net',
+            // Les visiteurs sont redirigés vers le site officiel (sauf /admin).
+            'redirect_to' => 'https://olivier.pizelle.mds-nantes.fr',
             'host' => "alwaysdata, 91 rue du Faubourg Saint-Honoré, 75008 Paris, France (https://www.alwaysdata.com)",
         ],
     ],
