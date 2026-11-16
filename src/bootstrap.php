@@ -39,9 +39,18 @@ header('X-Frame-Options: DENY');
 header('Referrer-Policy: strict-origin-when-cross-origin');
 header("Content-Security-Policy: default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'");
 
-// Session : cookie inaccessible au JavaScript, limité au site, sécurisé en HTTPS.
+// La visite est-elle en HTTPS ? Chez alwaysdata, un proxy chiffre la connexion devant Apache :
+// on regarde donc aussi l'en-tête X-Forwarded-Proto qu'il ajoute (même logique que public/.htaccess).
 $https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
     || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
+
+// HSTS : demande au navigateur de n'utiliser que HTTPS pour ce site pendant hsts_max_age secondes,
+// même si on tape « http:// ». Envoyé seulement en HTTPS (en HTTP, les navigateurs l'ignorent). Voir docs/https.md.
+if ($https && !$config['static_build'] && (int) ($config['hsts_max_age'] ?? 0) > 0) {
+    header('Strict-Transport-Security: max-age=' . (int) $config['hsts_max_age']);
+}
+
+// Session : cookie inaccessible au JavaScript, limité au site, sécurisé en HTTPS.
 session_set_cookie_params([
     'lifetime' => 0,
     'path' => '/',

@@ -78,7 +78,7 @@ Adresse et préfixe de la version statique : section `static` de `config.php`.
 2. **Web › Sites** : type PHP, racine du site = `www/public`.
 3. Se connecter en SSH et cloner le dépôt dans `www` : `git clone https://github.com/<compte>/<depot>.git www`
 4. `php www/bin/create-admin.php` pour créer le compte du backoffice.
-5. Renseigner `base_url` dans `config.php`, puis décommenter la redirection HTTPS dans `public/.htaccess`.
+5. Renseigner `base_url` dans `config.php`. La redirection HTTP → HTTPS (`public/.htaccess`) et l'en-tête HSTS (`hsts_max_age` dans `config.php`) sont actifs d'office : voir [docs/https.md](docs/https.md).
 
 6. **Avancé › Tâches planifiées** : ajouter la commande `php ~/www/bin/monitor.php`, toutes les 15 minutes.
 7. Adresse surveillée : `monitor.url` dans `config.php` (ici le site AlwaysData lui-même). Quand elle change, l'historique de supervision repart de zéro.
