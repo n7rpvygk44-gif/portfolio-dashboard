@@ -2,6 +2,18 @@
 
 Copie indépendante du dépôt [Portefolio](https://github.com/n7rpvygk44-gif/Portefolio), qui ajoute un **tableau de bord** sur `/admin` : gestion du contenu, audience et supervision. Le dépôt d'origine et le site publié sur GitHub Pages ne sont pas concernés.
 
+## Où le site est publié
+
+| Copie | Adresse | Mise à jour |
+|---|---|---|
+| **Officielle** (site de l'école, Infomaniak) | https://olivier.pizelle.mds-nantes.fr | Script FTPS [deploiement-ftp](https://github.com/n7rpvygk44-gif/deploiement-ftp) |
+| Secondaire (alwaysdata) | https://olivierpizelle.alwaysdata.net | `ssh` puis `cd www && git pull` |
+| Secondaire (GitHub Pages, sans PHP) | https://n7rpvygk44-gif.github.io/Portefolio/ | Workflow manuel du dépôt Portefolio (ancien code, pas encore relié à l’adresse officielle) |
+
+Le site de l’école et alwaysdata annoncent l’adresse officielle aux moteurs de recherche (`canonical_url` dans `config.php` : balise canonical, `og:url`, `sitemap.xml`, `robots.txt`), pour ne pas être vus comme des doublons. Les réglages propres à une copie (hébergeur des mentions légales…) sont dans `hosts` de `config.php`.
+
+Le compte de `/admin` (`data/admin.json`) n'est jamais dans Git : on le crée avec `php bin/create-admin.php`. Sur le site de l'école (FTP seulement, pas de SSH), on le crée sur le Mac et le script de déploiement l'envoie en FTPS.
+
 Site portfolio pour l'épreuve E5 du BTS SIO option SISR : présentation, parcours, compétences du bloc 1, réalisations, tableau de synthèse, veille technologique, base de connaissances et contact.
 
 - **PHP natif** (8.1 ou plus), sans framework ni base de données

@@ -48,6 +48,6 @@
     '@type' => 'Person',
     'name' => $profile['nom'] ?? '',
     'jobTitle' => $profile['titre'] ?? '',
-    'url' => $config['base_url'],
+    'url' => Seo::url($config, '/'),
     'sameAs' => array_values(array_filter([$profile['linkedin'] ?? '', $profile['github'] ?? ''])),
 ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG) ?></script>

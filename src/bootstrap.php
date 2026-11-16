@@ -22,6 +22,13 @@ date_default_timezone_set('Europe/Paris');
 
 $config = require ROOT_DIR . '/config.php';
 
+// Réglages propres à la copie visitée (alwaysdata...), d'après le nom de domaine.
+// Le nom vient du navigateur : il sert seulement à choisir dans la liste de config.php.
+$host = strtolower(explode(':', (string) ($_SERVER['HTTP_HOST'] ?? ''))[0]);
+if (isset($config['hosts'][$host])) {
+    $config = array_merge($config, $config['hosts'][$host]);
+}
+
 // Génération de la version statique : on remplace l'adresse du site et on n'ouvre pas de session.
 $config['static_build'] = getenv('STATIC_BUILD') === '1';
 if ($config['static_build']) {
