@@ -8,6 +8,16 @@ require dirname(__DIR__) . '/src/bootstrap.php';
 
 $path = '/' . trim((string) parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH), '/');
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+
+// Copie secondaire (ex. alwaysdata) : chaque visiteur est renvoyé vers la même page du site
+// officiel (redirection permanente 301). Seul le backoffice /admin reste utilisable ici.
+// Réglage « redirect_to » dans la partie « hosts » de config.php.
+$requestUri = (string) ($_SERVER['REQUEST_URI'] ?? '/');
+if (!empty($config['redirect_to']) && $path !== '/admin' && !str_starts_with($path, '/admin/')
+    && str_starts_with($requestUri, '/') && !str_starts_with($requestUri, '//')) {
+    header('Location: ' . rtrim($config['redirect_to'], '/') . $requestUri, true, 301);
+    exit;
+}
 $profile = $store->read('profile');
 
 // Variables communes à toutes les pages publiques.

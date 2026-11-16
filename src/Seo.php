@@ -5,9 +5,10 @@ declare(strict_types=1);
 
 final class Seo
 {
+    // Adresse officielle d'une page (canonical, og:url, sitemap), quelle que soit la copie visitée.
     public static function url(array $config, string $path): string
     {
-        return rtrim($config['base_url'], '/') . page_path($path);
+        return rtrim($config['canonical_url'] ?? $config['base_url'], '/') . $path;
     }
 
     // Liste de toutes les pages publiques, utilisée pour le sitemap.
